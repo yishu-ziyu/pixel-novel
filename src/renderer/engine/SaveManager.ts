@@ -7,7 +7,7 @@ const MAX_SAVE_SLOTS = 5;
 
 export class SaveManager {
   private saves: SaveData[] = [];
-  private settings: SettingsData;
+  private settings!: SettingsData;
   private achievements: AchievementData[] = [];
 
   constructor() {

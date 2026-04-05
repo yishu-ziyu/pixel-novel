@@ -188,7 +188,7 @@ const App: React.FC = () => {
         {(appState === 'playing' || appState === 'paused' || appState === 'save_menu' || appState === 'load_menu' || appState === 'settings') && (
           <>
             <PixelArtScene
-              type={(engineData.scene?.id as any) || 'convenience_store'}
+              type={(engineData.scene?.background as any) || 'convenience_store'}
               timeOfDay="night"
             />
 

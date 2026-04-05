@@ -27,8 +27,9 @@ export interface Dialogue {
 }
 
 export interface BackgroundTransition {
-  type: 'fade';
+  type: 'fade' | 'slide' | 'dissolve';
   duration?: number;
+  direction?: 'left' | 'right' | 'up' | 'down';
 }
 
 export interface Scene {
@@ -40,6 +41,7 @@ export interface Scene {
   dialogues: Dialogue[];
   bgm?: string;
   ambience?: string;
+  nextSceneId?: string;
 }
 
 export interface NovelScript {

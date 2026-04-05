@@ -81,7 +81,7 @@ export class NovelEngine {
     const data: EngineData = {
       script: this.script || undefined,
       scene: this.currentScene || undefined,
-      dialogue,
+      dialogue: dialogue ?? undefined,
       choices: dialogue?.choices,
       currentText: this.displayedText,
       characters: this.currentScene?.characters || [],
@@ -176,8 +176,9 @@ export class NovelEngine {
     if (this.state === 'choice') return;
 
     if (this.textInterval) {
-      if (this.displayedText.length < this.currentDialogue?.text.length) {
-        this.displayedText = this.currentDialogue?.text || '';
+      const currentText = this.currentDialogue?.text || '';
+      if (this.displayedText.length < currentText.length) {
+        this.displayedText = currentText;
         if (this.textInterval) clearInterval(this.textInterval);
         this.textInterval = null;
         this.notify();
