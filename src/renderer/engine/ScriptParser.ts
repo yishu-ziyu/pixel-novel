@@ -36,7 +36,8 @@ export class ScriptParser {
 
     if (s.backgroundTransition) {
       const bt = s.backgroundTransition as Record<string, unknown>;
-      if (bt.type !== 'fade') return false;
+      const validTypes = ['fade', 'fadeToBlack', 'crossDissolve', 'slide', 'iris'];
+      if (!validTypes.includes(bt.type as string)) return false;
     }
 
     if (s.characters) {
