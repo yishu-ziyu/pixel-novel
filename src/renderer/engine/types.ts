@@ -27,9 +27,10 @@ export interface Dialogue {
 }
 
 export interface BackgroundTransition {
-  type: 'fade' | 'slide' | 'dissolve';
+  type: 'fade' | 'fadeToBlack' | 'crossDissolve' | 'slide' | 'iris';
   duration?: number;
   direction?: 'left' | 'right' | 'up' | 'down';
+  irisOrigin?: 'center' | 'top' | 'bottom' | 'left' | 'right';
 }
 
 export interface Scene {
@@ -56,19 +57,37 @@ export interface SaveData {
   saveName: string;
   timestamp: number;
   sceneId: string;
+  sceneName?: string;
   dialogueIndex: number;
   choicesMade: string[];
   currentText: string;
   thumbnail?: string;
+  playTimeSeconds?: number;
+}
+
+export interface AutoSaveData {
+  lastAutoSaveSceneId: string | null;
+  lastAutoSaveTime: number;
+  justLoaded: boolean;
 }
 
 export interface SettingsData {
-  textSpeed: number;
-  autoPlayInterval: number;
+  textSpeed: number; // 0.5=slow, 1=medium, 2=fast, 5=instant
+  autoPlayInterval: number; // milliseconds: 1000, 2000, 3000
   bgmVolume: number;
   sfxVolume: number;
   fullscreen: boolean;
 }
+
+// Text speed presets
+export type TextSpeedPreset = 'slow' | 'medium' | 'fast' | 'instant';
+
+export const TEXT_SPEED_VALUES: Record<TextSpeedPreset, number> = {
+  slow: 0.5,
+  medium: 1,
+  fast: 2,
+  instant: 5,
+};
 
 export interface AchievementData {
   id: string;

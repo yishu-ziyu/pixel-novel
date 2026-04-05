@@ -11,3 +11,5 @@ export { PixelArtScene } from './PixelArtScene';
 export { BranchTreeViewer } from './BranchTreeViewer';
 export { PixelCharacter } from './PixelCharacter';
 export { StorySelector } from './StorySelector';
+export { AutoSaveToast } from './AutoSaveToast';
+export { SceneTransition, TransitionManager } from './SceneTransition';

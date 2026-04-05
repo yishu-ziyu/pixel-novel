@@ -1,14 +1,21 @@
-import { SaveData, SettingsData, AchievementData } from './types';
+import { SaveData, SettingsData, AchievementData, AutoSaveData } from './types';
 
 const STORAGE_KEY_SAVES = 'pixel-novel-saves';
 const STORAGE_KEY_SETTINGS = 'pixel-novel-settings';
 const STORAGE_KEY_ACHIEVEMENTS = 'pixel-novel-achievements';
+const STORAGE_KEY_AUTO_SAVE = 'pixel-novel-auto-save';
 const MAX_SAVE_SLOTS = 5;
+const AUTO_SAVE_SLOT_ID = -1;
 
 export class SaveManager {
   private saves: SaveData[] = [];
   private settings!: SettingsData;
   private achievements: AchievementData[] = [];
+  private autoSaveData: AutoSaveData = {
+    lastAutoSaveSceneId: null,
+    lastAutoSaveTime: 0,
+    justLoaded: false,
+  };
 
   constructor() {
     this.loadAllData();
@@ -35,12 +42,28 @@ export class SaveManager {
     } catch (e) {
       this.achievements = [];
     }
+
+    try {
+      const autoSaveData = localStorage.getItem(STORAGE_KEY_AUTO_SAVE);
+      this.autoSaveData = autoSaveData ? JSON.parse(autoSaveData) : {
+        lastAutoSaveSceneId: null,
+        lastAutoSaveTime: 0,
+        justLoaded: false,
+      };
+    } catch (e) {
+      this.autoSaveData = {
+        lastAutoSaveSceneId: null,
+        lastAutoSaveTime: 0,
+        justLoaded: false,
+      };
+    }
   }
 
   private saveAllData(): void {
     localStorage.setItem(STORAGE_KEY_SAVES, JSON.stringify(this.saves));
     localStorage.setItem(STORAGE_KEY_SETTINGS, JSON.stringify(this.settings));
     localStorage.setItem(STORAGE_KEY_ACHIEVEMENTS, JSON.stringify(this.achievements));
+    localStorage.setItem(STORAGE_KEY_AUTO_SAVE, JSON.stringify(this.autoSaveData));
   }
 
   private getDefaultSettings(): SettingsData {
@@ -74,7 +97,7 @@ export class SaveManager {
     return slots;
   }
 
-  saveGame(saveId: number, saveName: string, sceneId: string, dialogueIndex: number, choicesMade: string[], currentText: string, thumbnail?: string): boolean {
+  saveGame(saveId: number, saveName: string, sceneId: string, dialogueIndex: number, choicesMade: string[], currentText: string, thumbnail?: string, playTimeSeconds?: number): boolean {
     if (saveId < 0 || saveId >= MAX_SAVE_SLOTS) return false;
 
     const saveData: SaveData = {
@@ -86,6 +109,7 @@ export class SaveManager {
       choicesMade,
       currentText,
       thumbnail,
+      playTimeSeconds,
     };
 
     const existingIndex = this.saves.findIndex(s => s.saveId === saveId);
@@ -120,6 +144,82 @@ export class SaveManager {
 
   quickLoad(): SaveData | null {
     return this.loadGame(0);
+  }
+
+  autoSave(
+    sceneId: string,
+    sceneName: string,
+    dialogueIndex: number,
+    choicesMade: string[],
+    currentText: string,
+    playTimeSeconds: number,
+    thumbnail?: string
+  ): boolean {
+    const saveData: SaveData = {
+      saveId: AUTO_SAVE_SLOT_ID,
+      saveName: 'Auto Save',
+      timestamp: Date.now(),
+      sceneId,
+      sceneName,
+      dialogueIndex,
+      choicesMade,
+      currentText,
+      thumbnail,
+      playTimeSeconds,
+    };
+
+    const existingIndex = this.saves.findIndex(s => s.saveId === AUTO_SAVE_SLOT_ID);
+    if (existingIndex >= 0) {
+      this.saves[existingIndex] = saveData;
+    } else {
+      this.saves.push(saveData);
+    }
+
+    this.autoSaveData.lastAutoSaveSceneId = sceneId;
+    this.autoSaveData.lastAutoSaveTime = Date.now();
+    this.saveAllData();
+    return true;
+  }
+
+  loadAutoSave(): SaveData | null {
+    const save = this.saves.find(s => s.saveId === AUTO_SAVE_SLOT_ID);
+    if (save) {
+      this.autoSaveData.justLoaded = true;
+      this.saveAllData();
+    }
+    return save || null;
+  }
+
+  getLastAutoSaveSceneId(): string | null {
+    return this.autoSaveData.lastAutoSaveSceneId;
+  }
+
+  getLastAutoSaveTime(): number {
+    return this.autoSaveData.lastAutoSaveTime;
+  }
+
+  hasJustLoaded(): boolean {
+    return this.autoSaveData.justLoaded;
+  }
+
+  setJustLoaded(value: boolean): void {
+    this.autoSaveData.justLoaded = value;
+    this.saveAllData();
+  }
+
+  clearJustLoaded(): void {
+    this.autoSaveData.justLoaded = false;
+    this.saveAllData();
+  }
+
+  shouldAutoSave(sceneId: string): boolean {
+    if (this.autoSaveData.justLoaded) {
+      return false;
+    }
+    if (this.autoSaveData.lastAutoSaveSceneId === sceneId) {
+      return false;
+    }
+    return true;
   }
 
   getSettings(): SettingsData {

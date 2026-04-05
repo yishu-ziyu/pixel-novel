@@ -20,9 +20,12 @@ export interface EngineData {
   choicesMade?: string[];
   textSpeed?: number;
   isAutoPlay?: boolean;
+  isSkipping?: boolean;
   dialogueHistory?: Dialogue[];
   audioManager?: AudioManager;
   visitedSceneIds?: string[];
+  visitedDialogueIds?: string[];
+  currentDialogueId?: string;
 }
 
 export class NovelEngine {
@@ -40,10 +43,16 @@ export class NovelEngine {
   private autoSaveInterval: ReturnType<typeof setInterval> | null = null;
   private textSpeed: number = 1;
   private isAutoPlay: boolean = false;
+  private isSkipping: boolean = false;
   private autoPlayInterval: ReturnType<typeof setInterval> | null = null;
   private dialogueHistory: Dialogue[] = [];
   private audioManager: AudioManager;
   private visitedSceneIds: Set<string> = new Set();
+  private visitedDialogueIds: Set<string> = new Set();
+  private dialogueIdCounter: number = 0;
+  private playTimeSeconds: number = 0;
+  private playTimeInterval: ReturnType<typeof setInterval> | null = null;
+  private onAutoSave?: () => void;
 
   constructor() {
     this.parser = new ScriptParser();
@@ -51,6 +60,20 @@ export class NovelEngine {
     const settings = this.saveManager.getSettings();
     this.textSpeed = settings.textSpeed;
     this.audioManager = new AudioManager(settings);
+    this.startPlayTimeTracking();
+  }
+
+  private startPlayTimeTracking(): void {
+    if (this.playTimeInterval) {
+      clearInterval(this.playTimeInterval);
+    }
+    this.playTimeInterval = setInterval(() => {
+      this.playTimeSeconds++;
+    }, 1000);
+  }
+
+  public setOnAutoSaveCallback(callback: () => void): void {
+    this.onAutoSave = callback;
   }
 
   async loadScript(scriptPath: string): Promise<boolean> {
@@ -78,6 +101,8 @@ export class NovelEngine {
       backgroundTransition = this.currentScene.backgroundTransition;
     }
 
+    const currentDialogueId = this.getCurrentDialogueId();
+
     const data: EngineData = {
       script: this.script || undefined,
       scene: this.currentScene || undefined,
@@ -93,9 +118,12 @@ export class NovelEngine {
       choicesMade: this.choicesMade,
       textSpeed: this.textSpeed,
       isAutoPlay: this.isAutoPlay,
+      isSkipping: this.isSkipping,
       dialogueHistory: this.dialogueHistory,
       audioManager: this.audioManager,
       visitedSceneIds: Array.from(this.visitedSceneIds),
+      visitedDialogueIds: Array.from(this.visitedDialogueIds),
+      currentDialogueId,
     };
     this.listeners.forEach((l) => l(this.state, data));
   }
@@ -123,6 +151,10 @@ export class NovelEngine {
       this.audioManager.fadeOutBgm(500);
     }
 
+    if (this.saveManager.shouldAutoSave(sceneId)) {
+      this.performAutoSave();
+    }
+
     this.displayCurrentDialogue();
   }
 
@@ -138,6 +170,10 @@ export class NovelEngine {
       return;
     }
 
+    // Generate and track dialogue ID for skip mode
+    const dialogueId = this.getCurrentDialogueId();
+    this.visitedDialogueIds.add(dialogueId);
+
     if (dialogue) {
       this.dialogueHistory.push(dialogue);
     }
@@ -145,6 +181,24 @@ export class NovelEngine {
     this.displayedText = '';
     this.state = dialogue.choices && dialogue.choices.length > 0 ? 'choice' : 'dialogue';
     this.notify();
+
+    // For instant text speed, skip the typewriter effect
+    if (this.textSpeed >= 5) {
+      this.displayedText = dialogue.text;
+      if (this.textInterval) clearInterval(this.textInterval);
+      this.textInterval = null;
+      this.notify();
+
+      if (this.isAutoPlay && this.state === 'dialogue') {
+        const autoPlayDelay = this.saveManager.getSettings().autoPlayInterval;
+        setTimeout(() => {
+          if (this.isAutoPlay) {
+            this.advance();
+          }
+        }, autoPlayDelay);
+      }
+      return;
+    }
 
     const baseDelay = 50;
     const delay = baseDelay / this.textSpeed;
@@ -175,6 +229,11 @@ export class NovelEngine {
   advance(): void {
     if (this.state === 'choice') return;
 
+    // Stop auto-play when user interacts
+    if (this.isAutoPlay) {
+      this.setAutoPlay(false);
+    }
+
     if (this.textInterval) {
       const currentText = this.currentDialogue?.text || '';
       if (this.displayedText.length < currentText.length) {
@@ -187,6 +246,13 @@ export class NovelEngine {
     }
 
     if (!this.currentScene) return;
+
+    // Skip mode: advance through visited dialogues until unvisited or end
+    if (this.isSkipping) {
+      this.advanceInSkipMode();
+      return;
+    }
+
     if (this.dialogueIndex < this.currentScene.dialogues.length - 1) {
       this.dialogueIndex++;
       this.displayCurrentDialogue();
@@ -200,12 +266,62 @@ export class NovelEngine {
     }
   }
 
+  private advanceInSkipMode(): void {
+    if (!this.currentScene) return;
+
+    // First, check if current dialogue text is fully displayed
+    const currentText = this.currentDialogue?.text || '';
+    if (this.displayedText.length < currentText.length) {
+      // Skip to full text first
+      this.displayedText = currentText;
+      if (this.textInterval) clearInterval(this.textInterval);
+      this.textInterval = null;
+      this.notify();
+      return;
+    }
+
+    // Then advance to next dialogue
+    if (this.dialogueIndex < this.currentScene.dialogues.length - 1) {
+      const nextDialogueId = `${this.currentScene.id}-${this.dialogueIndex + 1}`;
+      if (this.visitedDialogueIds.has(nextDialogueId)) {
+        // Skip visited dialogue
+        this.dialogueIndex++;
+        this.displayedText = this.currentDialogue?.text || '';
+        this.notify();
+        // Continue skipping recursively
+        this.advanceInSkipMode();
+      } else {
+        // Found unvisited dialogue, stop skipping
+        this.dialogueIndex++;
+        this.displayCurrentDialogue();
+      }
+    } else if (this.currentScene.nextSceneId) {
+      // Check if next scene's first dialogue is visited
+      const nextSceneFirstDialogueId = `${this.currentScene.nextSceneId}-0`;
+      if (this.visitedDialogueIds.has(nextSceneFirstDialogueId)) {
+        this.startScene(this.currentScene.nextSceneId);
+        // Continue skipping in new scene
+        this.advanceInSkipMode();
+      } else {
+        this.startScene(this.currentScene.nextSceneId);
+      }
+    } else {
+      this.state = 'end';
+      this.notify();
+    }
+  }
+
   selectChoice(choiceIndex: number): void {
     const dialogue = this.currentDialogue;
     if (!dialogue?.choices || !dialogue.choices[choiceIndex]) return;
-    
+
     const choice = dialogue.choices[choiceIndex];
     this.choicesMade.push(`${this.currentScene?.id || 'unknown'}-${choiceIndex}`);
+
+    if (this.saveManager.shouldAutoSave(choice.nextSceneId)) {
+      this.performAutoSave();
+    }
+
     const nextSceneId = choice.nextSceneId;
     this.startScene(nextSceneId);
   }
@@ -222,38 +338,67 @@ export class NovelEngine {
       this.currentScene.id,
       this.dialogueIndex,
       this.choicesMade,
-      this.displayedText
+      this.displayedText,
+      undefined,
+      this.playTimeSeconds
     );
   }
 
   loadGame(saveId: number): boolean {
     const saveData = this.saveManager.loadGame(saveId);
     if (!saveData) return false;
-    
+
     this.choicesMade = saveData.choicesMade;
+    this.playTimeSeconds = saveData.playTimeSeconds || 0;
     this.startScene(saveData.sceneId);
     this.dialogueIndex = saveData.dialogueIndex;
     this.displayedText = saveData.currentText;
-    
+
     if (this.currentScene) {
       const dialogue = this.currentScene.dialogues[this.dialogueIndex];
       if (dialogue) {
         this.state = dialogue.choices && dialogue.choices.length > 0 ? 'choice' : 'dialogue';
       }
     }
-    
+
+    if (saveId === 0) {
+      this.saveManager.setJustLoaded(true);
+    } else {
+      this.saveManager.clearJustLoaded();
+    }
+
     this.notify();
     return true;
   }
 
   quickSave(): boolean {
     if (!this.currentScene) return false;
-    return this.saveManager.quickSave(
+    return this.saveManager.saveGame(
+      0,
+      'Quick Save',
       this.currentScene.id,
       this.dialogueIndex,
       this.choicesMade,
-      this.displayedText
+      this.displayedText,
+      undefined,
+      this.playTimeSeconds
     );
+  }
+
+  private performAutoSave(): void {
+    if (!this.currentScene) return;
+    this.saveManager.autoSave(
+      this.currentScene.id,
+      this.currentScene.name,
+      this.dialogueIndex,
+      this.choicesMade,
+      this.displayedText,
+      this.playTimeSeconds,
+      this.currentScene.background
+    );
+    if (this.onAutoSave) {
+      this.onAutoSave();
+    }
   }
 
   quickLoad(): boolean {
@@ -340,5 +485,33 @@ export class NovelEngine {
 
   clearHistory(): void {
     this.dialogueHistory = [];
+  }
+
+  // Skip mode methods
+  toggleSkipMode(): void {
+    this.isSkipping = !this.isSkipping;
+    this.notify();
+  }
+
+  getIsSkipping(): boolean {
+    return this.isSkipping;
+  }
+
+  setSkipMode(enabled: boolean): void {
+    this.isSkipping = enabled;
+    this.notify();
+  }
+
+  getCurrentDialogueId(): string {
+    if (!this.currentScene) return '';
+    return `${this.currentScene.id}-${this.dialogueIndex}`;
+  }
+
+  isVisitedDialogue(dialogueId: string): boolean {
+    return this.visitedDialogueIds.has(dialogueId);
+  }
+
+  getVisitedDialogueIds(): string[] {
+    return Array.from(this.visitedDialogueIds);
   }
 }

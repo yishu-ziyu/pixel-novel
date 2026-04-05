@@ -1,6 +1,6 @@
-import React, { useEffect, useState, useCallback } from 'react';
+import React, { useEffect, useState, useCallback, useRef } from 'react';
 import { NovelEngine, EngineState, EngineData, SettingsData } from './engine';
-import { DialogueBox, ChoicePanel, CharacterLayer, MainMenu, PauseMenu, SaveLoadMenu, SettingsMenu, PixelArtScene, BranchTreeViewer, StorySelector } from './components';
+import { DialogueBox, ChoicePanel, CharacterLayer, MainMenu, PauseMenu, SaveLoadMenu, SettingsMenu, PixelArtScene, BranchTreeViewer, StorySelector, TransitionManager } from './components';
 
 const engine = new NovelEngine();
 
@@ -12,14 +12,52 @@ const App: React.FC = () => {
   const [appState, setAppState] = useState<AppState>('main_menu');
   const [settings, setSettings] = useState<SettingsData>(() => engine.getSaveManager().getSettings());
 
+  // Transition state
+  const [oldSceneBackground, setOldSceneBackground] = useState<string | null>(null);
+  const [currentSceneBackground, setCurrentSceneBackground] = useState<string | null>(null);
+  const [isTransitioning, setIsTransitioning] = useState(false);
+  const [pendingTransition, setPendingTransition] = useState<EngineData['backgroundTransition']>(undefined);
+  const previousSceneIdRef = useRef<string | null>(null);
+
   useEffect(() => {
     const unsubscribe = engine.subscribe((state, data) => {
       setEngineState(state);
       setEngineData(data);
+
+      // Detect scene change for transition
+      if (data.scene?.id && data.scene.id !== previousSceneIdRef.current) {
+        const prevSceneId = previousSceneIdRef.current;
+        previousSceneIdRef.current = data.scene.id;
+
+        // Find the current and previous scenes to get transition info
+        if (prevSceneId && data.script) {
+          const prevScene = data.script.scenes.find(s => s.id === prevSceneId);
+          const currentScene = data.script.scenes.find(s => s.id === data.scene?.id);
+
+          if (prevScene && currentScene) {
+            const transition = currentScene.backgroundTransition;
+
+            // Only transition if not already transitioning and there's a scene change
+            if (!isTransitioning) {
+              setOldSceneBackground(prevScene.background || null);
+              setCurrentSceneBackground(currentScene.background || null);
+              setPendingTransition(transition);
+              setIsTransitioning(true);
+            }
+          } else if (currentScene) {
+            // First scene or scene not found in script
+            setOldSceneBackground(null);
+            setCurrentSceneBackground(currentScene.background || null);
+            setIsTransitioning(false);
+          }
+        } else if (data.scene) {
+          setCurrentSceneBackground(data.scene.background || null);
+        }
+      }
     });
 
     return () => unsubscribe();
-  }, []);
+  }, [isTransitioning]);
 
   useEffect(() => {
     const handleKeyDown = (e: KeyboardEvent) => {
@@ -35,6 +73,13 @@ const App: React.FC = () => {
           }
         } else if (e.key === 'a' || e.key === 'A') {
           engine.toggleAutoPlay();
+        } else if (e.key === 'Tab') {
+          e.preventDefault();
+          engine.toggleSkipMode();
+        } else if (e.key === ' ' || e.key === 'Enter') {
+          // Space or Enter to advance / skip typewriter
+          e.preventDefault();
+          engine.advance();
         }
       } else if (appState === 'paused' || appState === 'branch_tree') {
         if (e.key === 'Escape') {
@@ -76,6 +121,7 @@ const App: React.FC = () => {
   const handleMainMenu = useCallback(() => {
     engine.stopAutoSave();
     engine.setAutoPlay(false);
+    engine.setSkipMode(false);
     setAppState('main_menu');
   }, []);
 
@@ -134,7 +180,16 @@ const App: React.FC = () => {
 
   const handleSceneSelect = useCallback((sceneId: string) => {
     engine.startScene(sceneId);
+    previousSceneIdRef.current = sceneId;
+    setIsTransitioning(false);
+    setOldSceneBackground(null);
     setAppState('playing');
+  }, []);
+
+  const handleTransitionComplete = useCallback(() => {
+    setIsTransitioning(false);
+    setOldSceneBackground(null);
+    setPendingTransition(undefined);
   }, []);
 
   return (
@@ -187,10 +242,29 @@ const App: React.FC = () => {
 
         {(appState === 'playing' || appState === 'paused' || appState === 'save_menu' || appState === 'load_menu' || appState === 'settings') && (
           <>
-            <PixelArtScene
-              type={(engineData.scene?.background as any) || 'convenience_store'}
-              timeOfDay="night"
-            />
+            {isTransitioning && oldSceneBackground && pendingTransition ? (
+              <TransitionManager
+                oldScene={
+                  <PixelArtScene
+                    type={oldSceneBackground as any}
+                    timeOfDay="night"
+                  />
+                }
+                newScene={
+                  <PixelArtScene
+                    type={(engineData.scene?.background as any) || 'convenience_store'}
+                    timeOfDay="night"
+                  />
+                }
+                transition={pendingTransition}
+                onComplete={handleTransitionComplete}
+              />
+            ) : (
+              <PixelArtScene
+                type={(engineData.scene?.background as any) || 'convenience_store'}
+                timeOfDay="night"
+              />
+            )}
 
             <CharacterLayer
               characters={engineData.characters || []}
@@ -203,6 +277,8 @@ const App: React.FC = () => {
                 character={engineData.dialogue.character}
                 text={engineData.currentText || ''}
                 onAdvance={handleAdvance}
+                isAutoPlay={engineData.isAutoPlay}
+                isSkipping={engineData.isSkipping}
               />
             )}
 
@@ -260,9 +336,11 @@ const App: React.FC = () => {
                   gap: 16,
                 }}
               >
-                {engineData.isAutoPlay && <span>自动播放</span>}
+                {engineData.isAutoPlay && <span style={{ color: '#4a9eff' }}>自动播放</span>}
+                {engineData.isSkipping && <span style={{ color: '#ff6b6b' }}>跳过模式</span>}
                 <span>ESC: 菜单</span>
                 <span>A: 自动</span>
+                <span>Tab: 跳过</span>
               </div>
             )}
           </>

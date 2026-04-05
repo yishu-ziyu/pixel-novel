@@ -64,7 +64,7 @@
     {
       "id": "black_flag",
       "background": "antarctic_plane",
-      "backgroundTransition": { "type": "fade", "duration": 500 },
+      "backgroundTransition": { "type": "fadeToBlack", "duration": 800 },
       "characters": [
         { "character": "scott", "emotion": "shocked", "sprite": { "position": "left" } },
         { "character": "bowers", "emotion": "shocked", "sprite": { "position": "right" } }
@@ -125,7 +125,7 @@
     {
       "id": "the_letter",
       "background": "tent_interior",
-      "backgroundTransition": { "type": "fade", "duration": 500 },
+      "backgroundTransition": { "type": "iris", "duration": 500, "irisOrigin": "center" },
       "characters": [
         { "character": "scott", "emotion": "devastated", "sprite": { "position": "center" } }
       ],
@@ -185,7 +185,7 @@
     {
       "id": "evans_falls",
       "background": "antarctic_blizzard",
-      "backgroundTransition": { "type": "fade", "duration": 800 },
+      "backgroundTransition": { "type": "crossDissolve", "duration": 600 },
       "characters": [
         { "character": "evans", "emotion": "exhausted", "sprite": { "position": "center" } },
         { "character": "scott", "emotion": "worried", "sprite": { "position": "left" } }
@@ -246,7 +246,7 @@
     {
       "id": "oates_sacrifice",
       "background": "antarctic_blizzard",
-      "backgroundTransition": { "type": "fade", "duration": 800 },
+      "backgroundTransition": { "type": "crossDissolve", "duration": 600 },
       "characters": [
         { "character": "oates", "emotion": "resigned", "sprite": { "position": "center" } },
         { "character": "scott", "emotion": "sorrow", "sprite": { "position": "left" } }
@@ -322,7 +322,7 @@
     {
       "id": "final_camp",
       "background": "final_camp",
-      "backgroundTransition": { "type": "fade", "duration": 800 },
+      "backgroundTransition": { "type": "fadeToBlack", "duration": 800 },
       "characters": [
         { "character": "scott", "emotion": "exhausted", "sprite": { "position": "center" } },
         { "character": "bowers", "emotion": "exhausted", "sprite": { "position": "left" } },

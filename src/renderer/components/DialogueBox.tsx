@@ -4,9 +4,11 @@ interface DialogueBoxProps {
   character?: string;
   text: string;
   onAdvance: () => void;
+  isAutoPlay?: boolean;
+  isSkipping?: boolean;
 }
 
-export const DialogueBox: React.FC<DialogueBoxProps> = ({ character, text, onAdvance }) => {
+export const DialogueBox: React.FC<DialogueBoxProps> = ({ character, text, onAdvance, isAutoPlay, isSkipping }) => {
   const [isAnimating, setIsAnimating] = useState(true);
   const [showCursor, setShowCursor] = useState(true);
   const cursorIntervalRef = useRef<ReturnType<typeof setInterval> | null>(null);
@@ -53,6 +55,10 @@ export const DialogueBox: React.FC<DialogueBoxProps> = ({ character, text, onAdv
             from { opacity: 0; transform: translateY(30px); }
             to { opacity: 1; transform: translateY(0); }
           }
+          @keyframes pulse {
+            0%, 100% { opacity: 1; }
+            50% { opacity: 0.5; }
+          }
         `}
       </style>
       {character && (
@@ -80,6 +86,47 @@ export const DialogueBox: React.FC<DialogueBoxProps> = ({ character, text, onAdv
       >
         CLICK TO CONTINUE
       </div>
+      {/* Status indicators */}
+      {(isAutoPlay || isSkipping) && (
+        <div
+          style={{
+            position: 'absolute',
+            top: 8,
+            right: 12,
+            display: 'flex',
+            gap: 8,
+          }}
+        >
+          {isAutoPlay && (
+            <span
+              style={{
+                backgroundColor: '#4a9eff',
+                color: '#fff',
+                padding: '2px 6px',
+                borderRadius: 2,
+                fontSize: 6,
+                animation: 'pulse 1s infinite',
+              }}
+            >
+              AUTO
+            </span>
+          )}
+          {isSkipping && (
+            <span
+              style={{
+                backgroundColor: '#ff6b6b',
+                color: '#fff',
+                padding: '2px 6px',
+                borderRadius: 2,
+                fontSize: 6,
+                animation: 'pulse 0.5s infinite',
+              }}
+            >
+              SKIP
+            </span>
+          )}
+        </div>
+      )}
     </div>
   );
 };

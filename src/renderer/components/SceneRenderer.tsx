@@ -42,7 +42,7 @@ export const SceneRenderer: React.FC<SceneRendererProps> = ({
           ...dirMap[slideDir],
           animation: `slideIn${slideDir.charAt(0).toUpperCase() + slideDir.slice(1)} 0.6s ease-out forwards`,
         };
-      case 'dissolve':
+      case 'crossDissolve':
         return {
           opacity: 0,
           animation: 'dissolve 1s ease-out forwards',

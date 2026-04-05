@@ -10,6 +10,19 @@ interface SaveLoadMenuProps {
   mode: 'save' | 'load';
 }
 
+function formatPlayTime(seconds: number): string {
+  const hours = Math.floor(seconds / 3600);
+  const minutes = Math.floor((seconds % 3600) / 60);
+  const secs = seconds % 60;
+  if (hours > 0) {
+    return `${hours}h ${minutes}m`;
+  }
+  if (minutes > 0) {
+    return `${minutes}m ${secs}s`;
+  }
+  return `${secs}s`;
+}
+
 export const SaveLoadMenu: React.FC<SaveLoadMenuProps> = ({
   saveManager,
   onSave,
@@ -130,6 +143,29 @@ export const SaveLoadMenu: React.FC<SaveLoadMenuProps> = ({
               >
                 {slot.currentText.substring(0, 50)}
                 {slot.currentText.length > 50 ? '...' : ''}
+              </div>
+            )}
+            {slot.timestamp > 0 && slot.sceneName && (
+              <div
+                style={{
+                  color: '#aaa',
+                  fontFamily: '"Press Start 2P", monospace',
+                  fontSize: 8,
+                  marginTop: 4,
+                }}
+              >
+                Scene: {slot.sceneName}
+              </div>
+            )}
+            {slot.timestamp > 0 && slot.playTimeSeconds !== undefined && (
+              <div
+                style={{
+                  color: '#888',
+                  fontFamily: '"Press Start 2P", monospace',
+                  fontSize: 8,
+                }}
+              >
+                Play Time: {formatPlayTime(slot.playTimeSeconds)}
               </div>
             )}
             {slot.timestamp > 0 && mode === 'load' && (
