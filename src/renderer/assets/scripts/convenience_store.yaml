@@ -1,0 +1,38 @@
+opening:
+  - "（凌晨一点，24小时便利店，暖黄灯光，空无一人……）"
+  - speaker: "你"
+    say: "除了偶尔进来买水的醉汉，就是和泡面作伴……今天应该也会是无聊的一夜吧。"
+  - speaker: "你"
+    say: "（该做点什么好呢……）"
+  - text: "该做点什么好呢……"
+    choices:
+      - text: "整理货架"
+        goto: branch_shelf
+      - text: "继续摸鱼玩手机"
+        goto: branch_phone
+      - text: "检查关东煮"
+        goto: branch_oden
+
+branch_shelf:
+  - speaker: "你"
+    say: "（走到零食区，伸手够向顶层的薯片）"
+  - speaker: "???"
+    say: "呀——吓到你了吗？"
+  - speaker: "你"
+    say: "哇啊啊啊！！（差点扔掉手里的薯片）"
+
+branch_phone:
+  - speaker: "你"
+    say: "（继续刷手机，摸鱼才是夜班精髓嘛～）"
+  - speaker: "你"
+    say: "（叮——手机弹出一条推送）"
+  - speaker: "系统"
+    say: "「今夜，便利店将接待非人类客人」"
+  - speaker: "你"
+    say: "什么奇怪的推送……"
+
+branch_oden:
+  - speaker: "你"
+    say: "（掀开关东煮锅盖，热气氤氲……）"
+  - speaker: "你"
+    say: "咦？！锅里怎么有个……小东西？！"

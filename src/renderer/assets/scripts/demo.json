@@ -1,0 +1,107 @@
+{
+  "title": "Pixel Novel Demo",
+  "scenes": [
+    {
+      "id": "start",
+      "background": "forest.png",
+      "backgroundTransition": { "type": "fade", "duration": 500 },
+      "characters": [
+        { "character": "hero", "emotion": "neutral", "sprite": { "position": "left" } }
+      ],
+      "dialogues": [
+        {
+          "character": "Narrator",
+          "emotion": "neutral",
+          "text": "Welcome to Pixel Novel, a lightweight visual novel engine!"
+        },
+        {
+          "character": "Hero",
+          "emotion": "happy",
+          "text": "Hello there, traveler! What brings you to this pixelated world?"
+        },
+        {
+          "character": "???",
+          "emotion": "sad",
+          "sprite": { "position": "right" },
+          "text": "I... I seem to have lost my way."
+        },
+        {
+          "character": "Hero",
+          "emotion": "neutral",
+          "text": "Lost, you say? This forest can be quite treacherous for newcomers.",
+          "choices": [
+            { "text": "Can you help me?", "nextSceneId": "helpful" },
+            { "text": "I'll find my own way.", "nextSceneId": "stubborn" }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "helpful",
+      "background": "village.png",
+      "backgroundTransition": { "type": "fade", "duration": 500 },
+      "characters": [
+        { "character": "hero", "emotion": "happy", "sprite": { "position": "left" } }
+      ],
+      "dialogues": [
+        {
+          "character": "Hero",
+          "emotion": "happy",
+          "text": "Of course! Follow me, I'll guide you through the forest."
+        },
+        {
+          "character": "Hero",
+          "emotion": "neutral",
+          "text": "But first, let me ask - what's your name, traveler?"
+        },
+        {
+          "character": "???",
+          "emotion": "neutral",
+          "sprite": { "position": "right" },
+          "text": "My name... is Aria."
+        },
+        {
+          "character": "Hero",
+          "emotion": "surprised",
+          "text": "Aria. A beautiful name. Nice to meet you, Aria!"
+        },
+        {
+          "character": "Narrator",
+          "emotion": "neutral",
+          "text": "And so begins a new adventure in the pixelated world..."
+        }
+      ]
+    },
+    {
+      "id": "stubborn",
+      "background": "cave.png",
+      "backgroundTransition": { "type": "fade", "duration": 500 },
+      "characters": [
+        { "character": "hero", "emotion": "sad", "sprite": { "position": "left" } }
+      ],
+      "dialogues": [
+        {
+          "character": "Hero",
+          "emotion": "sad",
+          "text": "Suit yourself! But be careful - there are dangers ahead."
+        },
+        {
+          "character": "???",
+          "emotion": "neutral",
+          "sprite": { "position": "right" },
+          "text": "I can handle myself. Thank you for your concern."
+        },
+        {
+          "character": "Hero",
+          "emotion": "neutral",
+          "text": "Very well. May fortune favor the bold."
+        },
+        {
+          "character": "Narrator",
+          "emotion": "neutral",
+          "text": "And so the traveler ventured forth alone..."
+        }
+      ]
+    }
+  ]
+}

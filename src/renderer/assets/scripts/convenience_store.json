@@ -1,0 +1,736 @@
+{
+  "title": "便利店夜班的奇妙客人",
+  "scenes": [
+    {
+      "id": "opening",
+      "background": "convenience_store_night.png",
+      "backgroundTransition": { "type": "fade", "duration": 800 },
+      "characters": [
+        { "character": "player", "emotion": "bored", "sprite": { "position": "center" } }
+      ],
+      "dialogues": [
+        {
+          "character": "你",
+          "emotion": "bored",
+          "text": "（凌晨一点，24小时便利店，暖黄灯光，空无一人……）"
+        },
+        {
+          "character": "你",
+          "emotion": "bored",
+          "text": "除了偶尔进来买水的醉汉，就是和泡面作伴……今天应该也会是无聊的一夜吧。"
+        },
+        {
+          "character": "你",
+          "emotion": "thinking",
+          "text": "（该做点什么好呢……）",
+          "choices": [
+            { "text": "整理货架", "nextSceneId": "branch_shelf" },
+            { "text": "继续摸鱼玩手机", "nextSceneId": "branch_phone" },
+            { "text": "检查关东煮", "nextSceneId": "branch_oden" }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "branch_shelf",
+      "background": "shelf_area.png",
+      "backgroundTransition": { "type": "fade", "duration": 500 },
+      "characters": [
+        { "character": "player", "emotion": "working", "sprite": { "position": "center" } }
+      ],
+      "dialogues": [
+        {
+          "character": "你",
+          "emotion": "working",
+          "text": "（走到零食区，伸手够向顶层的薯片）"
+        },
+        {
+          "character": "???",
+          "emotion": "surprised",
+          "sprite": { "position": "right" },
+          "text": "呀——吓到你了吗？"
+        },
+        {
+          "character": "你",
+          "emotion": "shocked",
+          "text": "哇啊啊啊！！（差点扔掉手里的薯片）"
+        }
+      ],
+      "nextSceneId": "silver_girl_intro"
+    },
+    {
+      "id": "silver_girl_intro",
+      "background": "shelf_area.png",
+      "backgroundTransition": { "type": "fade", "duration": 500 },
+      "characters": [
+        { "character": "player", "emotion": "shocked", "sprite": { "position": "left" } },
+        { "character": "silver_girl", "emotion": "curious", "sprite": { "position": "right" } }
+      ],
+      "dialogues": [
+        {
+          "character": "???",
+          "emotion": "curious",
+          "sprite": { "position": "right" },
+          "text": "我在找星星味的糖果哦～"
+        },
+        {
+          "character": "你",
+          "emotion": "confused",
+          "text": "星星味？便利店没有这种口味吧……"
+        },
+        {
+          "character": "???",
+          "emotion": "smile",
+          "sprite": { "position": "right" },
+          "text": "有的哦，人类只是看不见而已～"
+        }
+      ],
+      "nextSceneId": "silver_girl_magic"
+    },
+    {
+      "id": "silver_girl_magic",
+      "background": "shelf_area.png",
+      "backgroundTransition": { "type": "fade", "duration": 500 },
+      "characters": [
+        { "character": "player", "emotion": "amazed", "sprite": { "position": "left" } },
+        { "character": "silver_girl", "emotion": "magic", "sprite": { "position": "right" } }
+      ],
+      "dialogues": [
+        {
+          "character": "???",
+          "emotion": "magic",
+          "sprite": { "position": "right" },
+          "text": "（少女指尖轻点，货架上的水果糖突然亮起微光）"
+        },
+        {
+          "character": "你",
+          "emotion": "amazed",
+          "text": "这、这是什么魔法！？"
+        },
+        {
+          "character": "???",
+          "emotion": "proud",
+          "sprite": { "position": "right" },
+          "text": "嘿嘿～我是梦的收集者，夜班便利店是夜晚灵魂的中转站哦。"
+        },
+        {
+          "character": "???",
+          "emotion": "proud",
+          "sprite": { "position": "right" },
+          "text": "每天都有奇妙客人来呢～我是银樱！"
+        }
+      ],
+      "nextSceneId": "silver_girl_wish"
+    },
+    {
+      "id": "silver_girl_wish",
+      "background": "window_night.png",
+      "backgroundTransition": { "type": "fade", "duration": 500 },
+      "characters": [
+        { "character": "player", "emotion": "curious", "sprite": { "position": "left" } },
+        { "character": "silver_girl", "emotion": "gentle", "sprite": { "position": "right" } }
+      ],
+      "dialogues": [
+        {
+          "character": "银樱",
+          "emotion": "gentle",
+          "sprite": { "position": "right" },
+          "text": "我收集人类深夜的小愿望，然后做成星星糖～"
+        },
+        {
+          "character": "银樱",
+          "emotion": "curious",
+          "sprite": { "position": "right" },
+          "text": "你有愿望吗？"
+        }
+      ],
+      "nextSceneId": "silver_girl_wish_choice"
+    },
+    {
+      "id": "silver_girl_wish_choice",
+      "background": "window_night.png",
+      "backgroundTransition": { "type": "fade", "duration": 500 },
+      "characters": [
+        { "character": "player", "emotion": "thinking", "sprite": { "position": "left" } },
+        { "character": "silver_girl", "emotion": "gentle", "sprite": { "position": "right" } }
+      ],
+      "dialogues": [
+        {
+          "character": "你",
+          "emotion": "thinking",
+          "text": "（许愿……我有愿望吗？）",
+          "choices": [
+            { "text": "想赚很多钱", "nextSceneId": "wish_money" },
+            { "text": "想考试不挂科", "nextSceneId": "wish_exam" },
+            { "text": "想每天都开心", "nextSceneId": "wish_happy" }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "wish_money",
+      "background": "window_night.png",
+      "backgroundTransition": { "type": "fade", "duration": 500 },
+      "characters": [
+        { "character": "player", "emotion": "embarrassed", "sprite": { "position": "left" } },
+        { "character": "silver_girl", "emotion": "laugh", "sprite": { "position": "right" } }
+      ],
+      "dialogues": [
+        {
+          "character": "你",
+          "emotion": "embarrassed",
+          "text": "那个……想赚很多钱？"
+        },
+        {
+          "character": "银樱",
+          "emotion": "laugh",
+          "sprite": { "position": "right" },
+          "text": "哈哈哈！诚实的愿望呢～"
+        },
+        {
+          "character": "银樱",
+          "emotion": "smile",
+          "sprite": { "position": "right" },
+          "text": "（掏出一颗金币形状的星星糖）会实现的，但要好好努力哦～"
+        }
+      ],
+      "nextSceneId": "climax"
+    },
+    {
+      "id": "wish_exam",
+      "background": "window_night.png",
+      "backgroundTransition": { "type": "fade", "duration": 500 },
+      "characters": [
+        { "character": "player", "emotion": "embarrassed", "sprite": { "position": "left" } },
+        { "character": "silver_girl", "emotion": "laugh", "sprite": { "position": "right" } }
+      ],
+      "dialogues": [
+        {
+          "character": "你",
+          "emotion": "embarrassed",
+          "text": "想……想考试不挂科就好……"
+        },
+        {
+          "character": "银樱",
+          "emotion": "laugh",
+          "sprite": { "position": "right" },
+          "text": "大学生专属愿望呢～"
+        },
+        {
+          "character": "银樱",
+          "emotion": "encourage",
+          "sprite": { "position": "right" },
+          "text": "（掏出试卷形状的星星糖）临时抱佛脚也有用，加油啦！"
+        }
+      ],
+      "nextSceneId": "climax"
+    },
+    {
+      "id": "wish_happy",
+      "background": "window_night.png",
+      "backgroundTransition": { "type": "fade", "duration": 500 },
+      "characters": [
+        { "character": "player", "emotion": "embarrassed", "sprite": { "position": "left" } },
+        { "character": "silver_girl", "emotion": "touch", "sprite": { "position": "right" } }
+      ],
+      "dialogues": [
+        {
+          "character": "你",
+          "emotion": "shy",
+          "text": "想……想每天都开心……"
+        },
+        {
+          "character": "银樱",
+          "emotion": "touch",
+          "sprite": { "position": "right" },
+          "text": "（眼眶微微发光）这个愿望……最温柔了。"
+        },
+        {
+          "character": "银樱",
+          "emotion": "warm",
+          "sprite": { "position": "right" },
+          "text": "（把星星糖塞进你手心）因为你已经很温柔啦，这个最简单～"
+        }
+      ],
+      "nextSceneId": "climax"
+    },
+    {
+      "id": "branch_phone",
+      "background": "counter.png",
+      "backgroundTransition": { "type": "fade", "duration": 500 },
+      "characters": [
+        { "character": "player", "emotion": "phone", "sprite": { "position": "center" } }
+      ],
+      "dialogues": [
+        {
+          "character": "你",
+          "emotion": "phone",
+          "text": "（继续刷手机，摸鱼才是夜班精髓嘛～）"
+        },
+        {
+          "character": "你",
+          "emotion": "confused",
+          "text": "（叮——手机弹出一条推送）"
+        },
+        {
+          "character": "系统",
+          "emotion": "neutral",
+          "text": "「今夜，便利店将接待非人类客人」"
+        },
+        {
+          "character": "你",
+          "emotion": "weird",
+          "text": "什么奇怪的推送……"
+        }
+      ],
+      "nextSceneId": "fox_intro"
+    },
+    {
+      "id": "fox_intro",
+      "background": "store_entrance.png",
+      "backgroundTransition": { "type": "fade", "duration": 500 },
+      "characters": [
+        { "character": "player", "emotion": "shocked", "sprite": { "position": "left" } },
+        { "character": "fox", "emotion": "cool", "sprite": { "position": "right" } }
+      ],
+      "dialogues": [
+        {
+          "character": "你",
+          "emotion": "shocked",
+          "text": "（风铃狂响——）"
+        },
+        {
+          "character": "???",
+          "emotion": "cool",
+          "sprite": { "position": "right" },
+          "text": "（一只穿小西装、戴礼帽的狐狸走进来，后腿直立走路）"
+        },
+        {
+          "character": "狐狸先生",
+          "emotion": "cool",
+          "sprite": { "position": "right" },
+          "text": "（推了推礼帽）年轻人，麻烦来一杯热可可。"
+        },
+        {
+          "character": "狐狸先生",
+          "emotion": "cool",
+          "sprite": { "position": "right" },
+          "text": "不加糖，加一点点月光。"
+        }
+      ],
+      "nextSceneId": "fox_surprise"
+    },
+    {
+      "id": "fox_surprise",
+      "background": "counter.png",
+      "backgroundTransition": { "type": "fade", "duration": 500 },
+      "characters": [
+        { "character": "player", "emotion": "shock", "sprite": { "position": "left" } },
+        { "character": "fox", "emotion": "smile", "sprite": { "position": "right" } }
+      ],
+      "dialogues": [
+        {
+          "character": "你",
+          "emotion": "shock",
+          "text": "狐、狐狸会说话？！"
+        },
+        {
+          "character": "狐狸先生",
+          "emotion": "smile",
+          "sprite": { "position": "right" },
+          "text": "失礼了～我是月下信使，负责给失眠的人送好梦。"
+        },
+        {
+          "character": "狐狸先生",
+          "emotion": "gentle",
+          "sprite": { "position": "right" },
+          "text": "今晚的月光有点淡，只能来便利店借点暖意啦～"
+        }
+      ],
+      "nextSceneId": "fox_story"
+    },
+    {
+      "id": "fox_story",
+      "background": "counter.png",
+      "backgroundTransition": { "type": "fade", "duration": 500 },
+      "characters": [
+        { "character": "player", "emotion": "curious", "sprite": { "position": "left" } },
+        { "character": "fox", "emotion": "wise", "sprite": { "position": "right" } }
+      ],
+      "dialogues": [
+        {
+          "character": "狐狸先生",
+          "emotion": "wise",
+          "sprite": { "position": "right" },
+          "text": "你知道吗？深夜来便利店的人，都藏着心事。"
+        },
+        {
+          "character": "狐狸先生",
+          "emotion": "wise",
+          "sprite": { "position": "right" },
+          "text": "有人买的不是水，是片刻的安静。"
+        }
+      ],
+      "nextSceneId": "fox_choice"
+    },
+    {
+      "id": "fox_choice",
+      "background": "counter.png",
+      "backgroundTransition": { "type": "fade", "duration": 500 },
+      "characters": [
+        { "character": "player", "emotion": "curious", "sprite": { "position": "left" } },
+        { "character": "fox", "emotion": "wise", "sprite": { "position": "right" } }
+      ],
+      "dialogues": [
+        {
+          "character": "你",
+          "emotion": "thinking",
+          "text": "（好奇地想问更多……）",
+          "choices": [
+            { "text": "真的有魔法吗？", "nextSceneId": "fox_magic" },
+            { "text": "你见过很多奇妙的人吗？", "nextSceneId": "fox_stories" }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "fox_magic",
+      "background": "counter.png",
+      "backgroundTransition": { "type": "fade", "duration": 500 },
+      "characters": [
+        { "character": "player", "emotion": "curious", "sprite": { "position": "left" } },
+        { "character": "fox", "emotion": "mysterious", "sprite": { "position": "right" } }
+      ],
+      "dialogues": [
+        {
+          "character": "你",
+          "emotion": "curious",
+          "text": "真的有魔法吗？"
+        },
+        {
+          "character": "狐狸先生",
+          "emotion": "mysterious",
+          "sprite": { "position": "right" },
+          "text": "（摇了摇尾巴，留下银色光斑）你今晚看到的还不够魔法吗？"
+        },
+        {
+          "character": "狐狸先生",
+          "emotion": "smile",
+          "sprite": { "position": "right" },
+          "text": "相信即存在，年轻人～"
+        }
+      ],
+      "nextSceneId": "climax"
+    },
+    {
+      "id": "fox_stories",
+      "background": "counter.png",
+      "backgroundTransition": { "type": "fade", "duration": 500 },
+      "characters": [
+        { "character": "player", "emotion": "curious", "sprite": { "position": "left" } },
+        { "character": "fox", "emotion": "nostalgic", "sprite": { "position": "right" } }
+      ],
+      "dialogues": [
+        {
+          "character": "你",
+          "emotion": "curious",
+          "text": "你见过很多奇妙的人吗？"
+        },
+        {
+          "character": "狐狸先生",
+          "emotion": "nostalgic",
+          "sprite": { "position": "right" },
+          "text": "嗯……见过在便利店哭泣后重新出发的上班族。"
+        },
+        {
+          "character": "狐狸先生",
+          "emotion": "nostalgic",
+          "sprite": { "position": "right" },
+          "text": "见过分手后一个人吃关东煮的女孩……后来找到了新幸福。"
+        },
+        {
+          "character": "狐狸先生",
+          "emotion": "smile",
+          "sprite": { "position": "right" },
+          "text": "深夜的便利店，是城市的疗愈角落呢。"
+        }
+      ],
+      "nextSceneId": "climax"
+    },
+    {
+      "id": "branch_oden",
+      "background": "oden_station.png",
+      "backgroundTransition": { "type": "fade", "duration": 500 },
+      "characters": [
+        { "character": "player", "emotion": "curious", "sprite": { "position": "center" } }
+      ],
+      "dialogues": [
+        {
+          "character": "你",
+          "emotion": "curious",
+          "text": "（掀开关东煮锅盖，热气氤氲……）"
+        },
+        {
+          "character": "你",
+          "emotion": "shock",
+          "text": "咦？！锅里怎么有个……小东西？！"
+        }
+      ],
+      "nextSceneId": "radish_intro"
+    },
+    {
+      "id": "radish_intro",
+      "background": "oden_station.png",
+      "backgroundTransition": { "type": "fade", "duration": 500 },
+      "characters": [
+        { "character": "player", "emotion": "shock", "sprite": { "position": "left" } },
+        { "character": "radish", "emotion": "wakeup", "sprite": { "position": "right" } }
+      ],
+      "dialogues": [
+        {
+          "character": "???",
+          "emotion": "wakeup",
+          "sprite": { "position": "right" },
+          "text": "（巴掌大的小精灵，翅膀是萝卜片形状，打着哈欠）"
+        },
+        {
+          "character": "???",
+          "emotion": "happy",
+          "sprite": { "position": "right" },
+          "text": "哈～终于有人发现我了！我是暖冬精灵！"
+        },
+        {
+          "character": "你",
+          "emotion": "confused",
+          "text": "精灵？！你怎么住在锅里啊！"
+        }
+      ],
+      "nextSceneId": "radish_explain"
+    },
+    {
+      "id": "radish_explain",
+      "background": "oden_station.png",
+      "backgroundTransition": { "type": "fade", "duration": 500 },
+      "characters": [
+        { "character": "player", "emotion": "amused", "sprite": { "position": "left" } },
+        { "character": "radish", "emotion": "proud", "sprite": { "position": "right" } }
+      ],
+      "dialogues": [
+        {
+          "character": "???（萝卜精灵）",
+          "emotion": "proud",
+          "sprite": { "position": "right" },
+          "text": "只有真心喜欢关东煮的人才能看见我哦～"
+        },
+        {
+          "character": "???（萝卜精灵）",
+          "emotion": "proud",
+          "sprite": { "position": "right" },
+          "text": "这里最暖和啦！叫我小萝吧～"
+        },
+        {
+          "character": "你",
+          "emotion": "amused",
+          "text": "小萝……（忍不住笑了）好可爱的名字。"
+        }
+      ],
+      "nextSceneId": "radish_warm"
+    },
+    {
+      "id": "radish_warm",
+      "background": "counter.png",
+      "backgroundTransition": { "type": "fade", "duration": 500 },
+      "characters": [
+        { "character": "player", "emotion": "warm", "sprite": { "position": "left" } },
+        { "character": "radish", "emotion": "warm", "sprite": { "position": "right" } }
+      ],
+      "dialogues": [
+        {
+          "character": "小萝",
+          "emotion": "warm",
+          "sprite": { "position": "right" },
+          "text": "（抱着关东煮萝卜啃）深夜的关东煮，藏着打工人、学生党所有的温柔哦～"
+        },
+        {
+          "character": "你",
+          "emotion": "warm",
+          "text": "（看着小萝，心里暖暖的）原来……便利店夜班一点都不无聊啊。"
+        },
+        {
+          "character": "小萝",
+          "emotion": "happy",
+          "sprite": { "position": "right" },
+          "text": "对吧对吧！你守着的不是货架，是深夜的温柔呢～"
+        }
+      ],
+      "nextSceneId": "climax"
+    },
+    {
+      "id": "climax",
+      "background": "store_entrance.png",
+      "backgroundTransition": { "type": "fade", "duration": 1000 },
+      "characters": [
+        { "character": "player", "emotion": "shock", "sprite": { "position": "center" } }
+      ],
+      "dialogues": [
+        {
+          "character": "你",
+          "emotion": "shock",
+          "text": "（凌晨三点，便利店门口站满了奇妙身影……）"
+        },
+        {
+          "character": "你",
+          "emotion": "amazed",
+          "text": "这、这些都是……？！"
+        }
+      ],
+      "nextSceneId": "climax_all"
+    },
+    {
+      "id": "climax_all",
+      "background": "store_entrance.png",
+      "backgroundTransition": { "type": "fade", "duration": 800 },
+      "characters": [
+        { "character": "silver_girl", "emotion": "smile", "sprite": { "position": "left" } },
+        { "character": "fox", "emotion": "bow", "sprite": { "position": "center" } },
+        { "character": "radish", "emotion": "happy", "sprite": { "position": "right" } }
+      ],
+      "dialogues": [
+        {
+          "character": "银樱",
+          "emotion": "smile",
+          "sprite": { "position": "left" },
+          "text": "影子精灵、路灯妖怪、失眠的云朵……都来了哦～"
+        },
+        {
+          "character": "狐狸先生",
+          "emotion": "bow",
+          "sprite": { "position": "center" },
+          "text": "（脱帽致意）谢谢你，深夜的守灯人。"
+        },
+        {
+          "character": "小萝",
+          "emotion": "happy",
+          "sprite": { "position": "right" },
+          "text": "因为你每晚都在，所以我们才能安心来休息呀～"
+        }
+      ],
+      "nextSceneId": "climax_tears"
+    },
+    {
+      "id": "climax_tears",
+      "background": "store_entrance.png",
+      "backgroundTransition": { "type": "fade", "duration": 500 },
+      "characters": [
+        { "character": "player", "emotion": "touch", "sprite": { "position": "center" } },
+        { "character": "silver_girl", "emotion": "warm", "sprite": { "position": "left" } },
+        { "character": "fox", "emotion": "smile", "sprite": { "position": "right" } }
+      ],
+      "dialogues": [
+        {
+          "character": "你",
+          "emotion": "touch",
+          "text": "（眼眶发热）我才要谢谢你们，让这个夜晚变得超级奇妙！"
+        },
+        {
+          "character": "银樱",
+          "emotion": "warm",
+          "sprite": { "position": "left" },
+          "text": "明天，他们还会来哦。但只有你能看见～"
+        }
+      ],
+      "nextSceneId": "ending"
+    },
+    {
+      "id": "ending",
+      "background": "dawn.png",
+      "backgroundTransition": { "type": "fade", "duration": 1000 },
+      "characters": [
+        { "character": "player", "emotion": "happy", "sprite": { "position": "center" } }
+      ],
+      "dialogues": [
+        {
+          "character": "你",
+          "emotion": "happy",
+          "text": "（清晨六点，天微微亮，奇妙客人消失，便利店恢复正常……）"
+        },
+        {
+          "character": "店长",
+          "emotion": "smile",
+          "text": "昨晚没偷懒吧？看你笑的很开心～"
+        },
+        {
+          "character": "你",
+          "emotion": "happy",
+          "text": "没有！昨晚……遇到了超级棒的事情！"
+        }
+      ],
+      "nextSceneId": "ending_inner"
+    },
+    {
+      "id": "ending_inner",
+      "background": "dawn.png",
+      "backgroundTransition": { "type": "fade", "duration": 500 },
+      "characters": [
+        { "character": "player", "emotion": "warm", "sprite": { "position": "center" } }
+      ],
+      "dialogues": [
+        {
+          "character": "你",
+          "emotion": "warm",
+          "text": "（握紧口袋里的星星糖，笑容满面）"
+        },
+        {
+          "character": "你",
+          "emotion": "warm",
+          "text": "原来最无聊的夜班，藏着最奇妙的魔法。"
+        },
+        {
+          "character": "你",
+          "emotion": "determined",
+          "text": "从今以后，我会好好守护这个深夜便利店，等待每一位可爱的客人！"
+        }
+      ],
+      "nextSceneId": "credits"
+    },
+    {
+      "id": "credits",
+      "background": "black.png",
+      "backgroundTransition": { "type": "fade", "duration": 1000 },
+      "characters": [],
+      "dialogues": [
+        {
+          "character": "",
+          "emotion": "neutral",
+          "text": "温柔的人，总会遇见奇妙的世界"
+        },
+        {
+          "character": "",
+          "emotion": "neutral",
+          "text": "—— 完 ——"
+        }
+      ],
+      "nextSceneId": "egg"
+    },
+    {
+      "id": "egg",
+      "background": "shelf_area.png",
+      "backgroundTransition": { "type": "fade", "duration": 500 },
+      "characters": [
+        { "character": "fox", "emotion": "peek", "sprite": { "position": "right" } }
+      ],
+      "dialogues": [
+        {
+          "character": "你",
+          "emotion": "laugh",
+          "text": "（转身整理货架，瞥见货架后露出一条毛茸茸的尾巴，一闪而过……）"
+        },
+        {
+          "character": "你",
+          "emotion": "smile",
+          "text": "……明天见啦，狐狸先生。"
+        }
+      ]
+    }
+  ]
+}
