@@ -1,10 +1,10 @@
 import React, { useEffect, useState, useCallback } from 'react';
 import { NovelEngine, EngineState, EngineData, SettingsData } from './engine';
-import { DialogueBox, ChoicePanel, CharacterLayer, MainMenu, PauseMenu, SaveLoadMenu, SettingsMenu, PixelArtScene, BranchTreeViewer } from './components';
+import { DialogueBox, ChoicePanel, CharacterLayer, MainMenu, PauseMenu, SaveLoadMenu, SettingsMenu, PixelArtScene, BranchTreeViewer, StorySelector } from './components';
 
 const engine = new NovelEngine();
 
-type AppState = 'main_menu' | 'playing' | 'paused' | 'save_menu' | 'load_menu' | 'settings' | 'credits' | 'branch_tree';
+type AppState = 'main_menu' | 'story_selector' | 'playing' | 'paused' | 'save_menu' | 'load_menu' | 'settings' | 'credits' | 'branch_tree';
 
 const App: React.FC = () => {
   const [engineState, setEngineState] = useState<EngineState>('idle');
@@ -48,7 +48,15 @@ const App: React.FC = () => {
   }, [appState]);
 
   const handleNewGame = useCallback(() => {
-    engine.loadScript('convenience_store.json');
+    setAppState('story_selector');
+  }, []);
+
+  const handleSelectStory = useCallback((storyId: string) => {
+    if (storyId === 'convenience_store') {
+      engine.loadScript('convenience_store.json');
+    } else if (storyId === 'scott_antarctic') {
+      engine.loadScript('scott_antarctic.json');
+    }
     engine.startAutoSave();
     setAppState('playing');
   }, []);
@@ -158,6 +166,13 @@ const App: React.FC = () => {
             onLoadGame={handleLoadGame}
             onSettings={handleSettings}
             onCredits={handleCredits}
+          />
+        )}
+
+        {appState === 'story_selector' && (
+          <StorySelector
+            onSelectStory={handleSelectStory}
+            onBack={() => setAppState('main_menu')}
           />
         )}
 

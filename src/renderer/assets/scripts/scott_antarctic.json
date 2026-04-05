@@ -1,0 +1,448 @@
+{
+  "title": "最漫长的归途",
+  "scenes": [
+    {
+      "id": "opening",
+      "background": "antarctic_plane",
+      "backgroundTransition": { "type": "fade", "duration": 800 },
+      "characters": [
+        { "character": "scott", "emotion": "determined", "sprite": { "position": "center" } }
+      ],
+      "dialogues": [
+        {
+          "character": "旁白",
+          "emotion": "neutral",
+          "text": "南极大陆没有风景。目之所及，除了白色，还是白色。"
+        },
+        {
+          "character": "旁白",
+          "emotion": "neutral",
+          "text": "一九一二年一月十六日，罗伯特·斯科特和他的四名同伴，已经在这片白色的荒原上拖着雪橇行走了两个半月。"
+        },
+        {
+          "character": "斯科特",
+          "emotion": "determined",
+          "text": "（喘着粗气）再加把劲，伙计们。我们就快到了。"
+        },
+        {
+          "character": "埃文斯",
+          "emotion": "tired",
+          "text": "队长……我感觉……我的腿有点不听使唤了。"
+        },
+        {
+          "character": "斯科特",
+          "emotion": "gentle",
+          "text": "再坚持一下，埃文斯。我们距离那个从未有人踏足的终点——南极极点——只剩下最后的几步之遥了。"
+        },
+        {
+          "character": "旁白",
+          "emotion": "neutral",
+          "text": "这几步走得异常沉重。这不仅因为他们刚刚翻越了横贯山脉，也不仅因为早已冻死的矮马和抛锚的机动车迫使他们不得不靠人力拖拽补给，更因为心里那根紧绷的弦。"
+        },
+        {
+          "character": "奥茨",
+          "emotion": "worried",
+          "text": "队长……你觉得……阿蒙森他们，是不是已经……？"
+        },
+        {
+          "character": "斯科特",
+          "emotion": "forced_smile",
+          "text": "别瞎想，奥茨。挪威人准备得早，但我们更坚韧。"
+        },
+        {
+          "character": "旁白",
+          "emotion": "neutral",
+          "text": "早在出发前，挪威人阿蒙森那封简短得近乎冷酷的电报——“请允许我通知您，我正前往南极”——就已将这场科学考察变成了一场无声的竞速。"
+        },
+        {
+          "character": "斯科特",
+          "emotion": "thinking",
+          "text": "（内心）请让我们成为第一个。请让英国国旗第一个飘扬在极点。"
+        }
+      ]
+    },
+    {
+      "id": "black_flag",
+      "background": "antarctic_plane",
+      "backgroundTransition": { "type": "fade", "duration": 500 },
+      "characters": [
+        { "character": "scott", "emotion": "shocked", "sprite": { "position": "left" } },
+        { "character": "bowers", "emotion": "shocked", "sprite": { "position": "right" } }
+      ],
+      "dialogues": [
+        {
+          "character": "旁白",
+          "emotion": "neutral",
+          "text": "一月十七日，天气晴好。在单调得令人发疯的地平线上，忽然出现了一个异物。"
+        },
+        {
+          "character": "鲍尔斯",
+          "emotion": "shocked",
+          "text": "队长……那是什么？不是冰山，不是雪脊，而是一个微小的、黑色的三角形。"
+        },
+        {
+          "character": "斯科特",
+          "emotion": "shocked",
+          "text": "（屏住呼吸）走近点。"
+        },
+        {
+          "character": "旁白",
+          "emotion": "neutral",
+          "text": "走近了。那是一座帐篷。帐篷顶端，一面挪威国旗在刺骨的寒风中猎猎作响。"
+        },
+        {
+          "character": "威尔逊",
+          "emotion": "sorrow",
+          "text": "队长……"
+        },
+        {
+          "character": "斯科特",
+          "emotion": "devastated",
+          "text": "不需要任何言语的说明，那一刻，所有的疲惫瞬间转化为了虚无。"
+        },
+        {
+          "character": "旁白",
+          "emotion": "neutral",
+          "text": "斯科特在日记里留下了极力克制的笔触：“挪威人抢在我们前面了……现在的梦想破灭了。”"
+        },
+        {
+          "character": "斯科特",
+          "emotion": "forced_smile",
+          "text": "好吧，伙计们。我们……我们还是要继续前进，到极点去看看。"
+        },
+        {
+          "character": "埃文斯",
+          "emotion": "sorrow",
+          "text": "队长……还有意义吗？"
+        },
+        {
+          "character": "斯科特",
+          "emotion": "determined",
+          "text": "当然有。我们不是来争第一的。我们是来做科学考察的。"
+        }
+      ]
+    },
+    {
+      "id": "the_letter",
+      "background": "tent_interior",
+      "backgroundTransition": { "type": "fade", "duration": 500 },
+      "characters": [
+        { "character": "scott", "emotion": "devastated", "sprite": { "position": "center" } }
+      ],
+      "dialogues": [
+        {
+          "character": "旁白",
+          "emotion": "neutral",
+          "text": "阿蒙森留了一张纸条，落款是整整一个月前。他甚至请求斯科特将一封信带给挪威国王。"
+        },
+        {
+          "character": "斯科特",
+          "emotion": "bitter_smile",
+          "text": "（看着纸条）真是个残酷的玩笑。他们不仅赢了比赛，还让我们当邮差。"
+        },
+        {
+          "character": "奥茨",
+          "emotion": "angry",
+          "text": "太过分了！我们为什么要帮他们送信？"
+        },
+        {
+          "character": "威尔逊",
+          "emotion": "calm",
+          "text": "冷静点，奥茨。这是探险家之间的荣誉。我们必须把信送到。"
+        },
+        {
+          "character": "斯科特",
+          "emotion": "resigned",
+          "text": "威尔逊说得对。我们把信带上吧。"
+        },
+        {
+          "character": "旁白",
+          "emotion": "neutral",
+          "text": "斯科特在挪威人的帐篷旁堆起石堆，插上了一面毫无生气的英国国旗。随后，他们转身，背对极点，开始了漫长的、一千四百公里的归途。"
+        },
+        {
+          "character": "斯科特",
+          "emotion": "determined",
+          "text": "好了，伙计们。我们回家。"
+        },
+        {
+          "character": "鲍尔斯",
+          "emotion": "worried",
+          "text": "队长……一千四百公里，我们……我们能走完吗？"
+        },
+        {
+          "character": "斯科特",
+          "emotion": "forced_smile",
+          "text": "当然能。我们不是已经走了这么远了吗？"
+        },
+        {
+          "character": "旁白",
+          "emotion": "neutral",
+          "text": "如果说来路是苦旅，归途便是炼狱。"
+        }
+      ]
+    },
+    {
+      "id": "evans_falls",
+      "background": "antarctic_blizzard",
+      "backgroundTransition": { "type": "fade", "duration": 800 },
+      "characters": [
+        { "character": "evans", "emotion": "exhausted", "sprite": { "position": "center" } },
+        { "character": "scott", "emotion": "worried", "sprite": { "position": "left" } }
+      ],
+      "dialogues": [
+        {
+          "character": "旁白",
+          "emotion": "neutral",
+          "text": "二月十六日，气温骤降至零下四十度，狂风卷着冰粒，像砂纸一样打磨着每个人的意志。"
+        },
+        {
+          "character": "埃文斯",
+          "emotion": "exhausted",
+          "text": "队长……我……我不行了……"
+        },
+        {
+          "character": "斯科特",
+          "emotion": "worried",
+          "text": "埃文斯！别倒下！我们就在这里扎营！"
+        },
+        {
+          "character": "埃文斯",
+          "emotion": "sorrow",
+          "text": "（虚弱地笑）对不起……拖你们后腿了……"
+        },
+        {
+          "character": "斯科特",
+          "emotion": "sorrow",
+          "text": "别这么说，埃文斯。你是最好的队员。"
+        },
+        {
+          "character": "埃文斯",
+          "emotion": "sorrow",
+          "text": "告诉……告诉我的妻子……我爱她……"
+        },
+        {
+          "character": "旁白",
+          "emotion": "neutral",
+          "text": "队员埃文斯在冰原上倒下，再也没有起来。"
+        },
+        {
+          "character": "斯科特",
+          "emotion": "sorrow",
+          "text": "（在日记里写道）我们失去了埃文斯。愿他安息。"
+        },
+        {
+          "character": "威尔逊",
+          "emotion": "calm",
+          "text": "我们必须继续前进。埃文斯不会希望我们停在这里。"
+        },
+        {
+          "character": "斯科特",
+          "emotion": "determined",
+          "text": "你说得对。我们继续。"
+        }
+      ]
+    },
+    {
+      "id": "oates_sacrifice",
+      "background": "antarctic_blizzard",
+      "backgroundTransition": { "type": "fade", "duration": 800 },
+      "characters": [
+        { "character": "oates", "emotion": "resigned", "sprite": { "position": "center" } },
+        { "character": "scott", "emotion": "sorrow", "sprite": { "position": "left" } }
+      ],
+      "dialogues": [
+        {
+          "character": "旁白",
+          "emotion": "neutral",
+          "text": "三月，另一个队员奥茨的脚冻坏了。他深知自己已成为队伍的累赘。"
+        },
+        {
+          "character": "奥茨",
+          "emotion": "sorrow",
+          "text": "队长……我的脚……完全没有知觉了。"
+        },
+        {
+          "character": "斯科特",
+          "emotion": "worried",
+          "text": "奥茨，别放弃。我们会一起走出去的。"
+        },
+        {
+          "character": "奥茨",
+          "emotion": "forced_smile",
+          "text": "（看着自己坏死的脚）队长，我很清楚。我现在就是个累赘。"
+        },
+        {
+          "character": "斯科特",
+          "emotion": "sorrow",
+          "text": "别这么说！我们是一个团队！"
+        },
+        {
+          "character": "奥茨",
+          "emotion": "gentle",
+          "text": "队长，你知道的。如果我不走，我们都走不出去。"
+        },
+        {
+          "character": "旁白",
+          "emotion": "neutral",
+          "text": "一天清晨，外面暴风雪肆虐，奥茨挣扎着站起身，对剩下的三个人说了一句平常得不能再平常的话："
+        },
+        {
+          "character": "奥茨",
+          "emotion": "calm",
+          "text": "我要出去一下，可能过一会才能回来。"
+        },
+        {
+          "character": "斯科特",
+          "emotion": "devastated",
+          "text": "（声音颤抖）奥茨……不要……"
+        },
+        {
+          "character": "奥茨",
+          "emotion": "smile",
+          "text": "（笑了笑）别担心，队长。我只是出去走走。"
+        },
+        {
+          "character": "旁白",
+          "emotion": "neutral",
+          "text": "他走进了风雪中，在这个白色的世界里把自己删除了。"
+        },
+        {
+          "character": "斯科特",
+          "emotion": "devastated",
+          "text": "（在日记里写道）奥茨走了。他是个真正的英雄。"
+        },
+        {
+          "character": "威尔逊",
+          "emotion": "sorrow",
+          "text": "他是为了我们。我们不能辜负他的牺牲。"
+        }
+      ]
+    },
+    {
+      "id": "final_camp",
+      "background": "final_camp",
+      "backgroundTransition": { "type": "fade", "duration": 800 },
+      "characters": [
+        { "character": "scott", "emotion": "exhausted", "sprite": { "position": "center" } },
+        { "character": "bowers", "emotion": "exhausted", "sprite": { "position": "left" } },
+        { "character": "wilson", "emotion": "exhausted", "sprite": { "position": "right" } }
+      ],
+      "dialogues": [
+        {
+          "character": "旁白",
+          "emotion": "neutral",
+          "text": "剩下的三个人继续挪动。坏血病侵蚀着他们的关节，燃料告罄，食物见底。"
+        },
+        {
+          "character": "斯科特",
+          "emotion": "exhausted",
+          "text": "（虚弱地）还有多远……到补给站？"
+        },
+        {
+          "character": "鲍尔斯",
+          "emotion": "exhausted",
+          "text": "队长……还有……二十公里。"
+        },
+        {
+          "character": "威尔逊",
+          "emotion": "calm",
+          "text": "再加把劲，斯科特。我们就快到了。"
+        },
+        {
+          "character": "旁白",
+          "emotion": "neutral",
+          "text": "三月二十九日，暴风雪将他们困在最后的营地。这里距离那个名为“一吨补给站”的食物储藏点，仅仅只有二十公里。"
+        },
+        {
+          "character": "斯科特",
+          "emotion": "resigned",
+          "text": "（苦笑）二十公里……这短短的距离，我们却再也走不动了。"
+        },
+        {
+          "character": "鲍尔斯",
+          "emotion": "sorrow",
+          "text": "队长……对不起……我没能……"
+        },
+        {
+          "character": "斯科特",
+          "emotion": "gentle",
+          "text": "别道歉，鲍尔斯。你没有对不起任何人。"
+        },
+        {
+          "character": "旁白",
+          "emotion": "neutral",
+          "text": "在他们冰冷的遗体旁，搜索队发现了十六公斤重的舌羊齿树化石。这是他们从南极腹地一路拖带回来的。"
+        },
+        {
+          "character": "斯科特",
+          "emotion": "gentle",
+          "text": "（看着化石）威尔逊……这几块石头……我们带回来，真的有意义吗？"
+        },
+        {
+          "character": "威尔逊",
+          "emotion": "calm",
+          "text": "当然有，斯科特。它们能证明，这片死寂的冰原，在远古曾是温暖的绿洲。"
+        },
+        {
+          "character": "斯科特",
+          "emotion": "smile",
+          "text": "（笑了笑）是啊……我们不是失败者。我们是科学家。"
+        }
+      ]
+    },
+    {
+      "id": "final_entry",
+      "background": "final_camp",
+      "backgroundTransition": { "type": "fade", "duration": 800 },
+      "characters": [],
+      "dialogues": [
+        {
+          "character": "旁白",
+          "emotion": "neutral",
+          "text": "日记本在斯科特的手边。结尾的字迹潦草而决绝，那是他留给世界的最后印象："
+        },
+        {
+          "character": "斯科特",
+          "emotion": "exhausted",
+          "text": "“我已经再也写不动了。”"
+        },
+        {
+          "character": "旁白",
+          "emotion": "neutral",
+          "text": "但他的最后一行不是绝望，而是——"
+        },
+        {
+          "character": "斯科特",
+          "emotion": "gentle",
+          "text": "“请把这本日记交给我的妻子。”"
+        },
+        {
+          "character": "旁白",
+          "emotion": "neutral",
+          "text": "他们不是失败者。他们虽然输掉了比赛，却赢得了尊严。"
+        },
+        {
+          "character": "旁白",
+          "emotion": "neutral",
+          "text": "他们在最恶劣的环境里，展现了最美好的人性——勇气、友谊、责任、牺牲。"
+        },
+        {
+          "character": "旁白",
+          "emotion": "neutral",
+          "text": "而那些化石，至今仍在讲述着那个古老的故事："
+        },
+        {
+          "character": "旁白",
+          "emotion": "neutral",
+          "text": "这片死寂的冰原，也曾是温暖的绿洲。就像这些勇敢的人的心中，永远燃烧着炽热的火焰。"
+        },
+        {
+          "character": "",
+          "emotion": "neutral",
+          "text": "—— 完 ——"
+        }
+      ]
+    }
+  ]
+}

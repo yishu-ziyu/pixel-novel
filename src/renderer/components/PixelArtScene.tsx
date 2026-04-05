@@ -1,7 +1,7 @@
 import React from 'react';
 
 interface PixelArtSceneProps {
-  type: 'convenience_store' | 'rainy_outside' | 'park' | 'room';
+  type: 'convenience_store' | 'rainy_outside' | 'park' | 'room' | 'antarctic_plane' | 'antarctic_blizzard' | 'tent_interior' | 'final_camp';
   timeOfDay?: 'day' | 'night' | 'evening';
 }
 
@@ -19,6 +19,14 @@ export const PixelArtScene: React.FC<PixelArtSceneProps> = ({
         return <ParkScene timeOfDay={timeOfDay} />;
       case 'room':
         return <RoomScene timeOfDay={timeOfDay} />;
+      case 'antarctic_plane':
+        return <AntarcticPlaneScene />;
+      case 'antarctic_blizzard':
+        return <AntarcticBlizzardScene />;
+      case 'tent_interior':
+        return <TentInteriorScene />;
+      case 'final_camp':
+        return <FinalCampScene />;
       default:
         return <ConvenienceStoreScene timeOfDay={timeOfDay} />;
     }
@@ -28,6 +36,197 @@ export const PixelArtScene: React.FC<PixelArtSceneProps> = ({
     <div style={{ position: 'absolute', inset: 0, overflow: 'hidden' }}>
       {getSceneContent()}
     </div>
+  );
+};
+
+const AntarcticPlaneScene: React.FC = () => {
+  return (
+    <svg viewBox="0 0 920 540" style={{ width: '100%', height: '100%', imageRendering: 'pixelated' }}>
+      <defs>
+        <linearGradient id="antarcticSky" x1="0%" y1="0%" x2="0%" y2="100%">
+          <stop offset="0%" stopColor="#1a2a4a" />
+          <stop offset="100%" stopColor="#2a4a7a" />
+        </linearGradient>
+        <pattern id="snowPattern" patternUnits="userSpaceOnUse" width="8" height="8">
+          <rect width="8" height="8" fill="transparent" />
+          <circle cx="2" cy="2" r="1" fill="#fff" opacity="0.3" />
+          <circle cx="6" cy="6" r="1" fill="#fff" opacity="0.5" />
+        </pattern>
+      </defs>
+
+      <rect x="0" y="0" width="920" height="540" fill="url(#antarcticSky)" />
+      <rect x="0" y="0" width="920" height="540" fill="url(#snowPattern)" />
+
+      {[...Array(20)].map((_, i) => (
+        <circle
+          key={i}
+          cx={50 + (i * 47) % 820}
+          cy={20 + ((i * 23) % 120)}
+          r={1 + (i % 3)}
+          fill="#fff"
+          opacity={0.3 + (i % 5) * 0.1}
+        />
+      ))}
+
+      <ellipse cx="460" cy="420" rx="500" ry="150" fill="#f0f5ff" />
+      <ellipse cx="460" cy="460" rx="520" ry="100" fill="#e8eef8" />
+
+      <polygon points="60,300 120,200 180,300" fill="#d8e0f0" />
+      <polygon points="80,300 120,220 160,300" fill="#e8f0f8" />
+
+      <polygon points="700,280 780,160 860,280" fill="#d8e0f0" />
+      <polygon points="720,280 780,190 840,280" fill="#e8f0f8" />
+
+      <rect x="0" y="400" width="920" height="140" fill="#f0f5ff" />
+
+      {[...Array(30)].map((_, i) => (
+        <line
+          key={i}
+          x1={Math.random() * 920}
+          y1={Math.random() * 540}
+          x2={Math.random() * 920 - 15}
+          y2={Math.random() * 540 + 20}
+          stroke="#e0e8f8"
+          strokeWidth="1"
+          opacity={0.2 + Math.random() * 0.3}
+        />
+      ))}
+    </svg>
+  );
+};
+
+const AntarcticBlizzardScene: React.FC = () => {
+  return (
+    <svg viewBox="0 0 920 540" style={{ width: '100%', height: '100%', imageRendering: 'pixelated' }}>
+      <defs>
+        <linearGradient id="blizzardSky" x1="0%" y1="0%" x2="0%" y2="100%">
+          <stop offset="0%" stopColor="#1a1a3a" />
+          <stop offset="100%" stopColor="#2a2a4a" />
+        </linearGradient>
+      </defs>
+
+      <rect x="0" y="0" width="920" height="540" fill="url(#blizzardSky)" />
+
+      <rect x="0" y="0" width="920" height="540" fill="#e0e8f8" opacity="0.4" />
+      
+      {[...Array(80)].map((_, i) => (
+        <line
+          key={i}
+          x1={Math.random() * 920}
+          y1={Math.random() * 540}
+          x2={Math.random() * 920 - 50}
+          y2={Math.random() * 540 + 60}
+          stroke="#fff"
+          strokeWidth="2"
+          opacity={0.3 + Math.random() * 0.4}
+        />
+      ))}
+
+      {[...Array(60)].map((_, i) => (
+        <line
+          key={i}
+          x1={Math.random() * 920}
+          y1={Math.random() * 540}
+          x2={Math.random() * 920 - 30}
+          y2={Math.random() * 540 + 40}
+          stroke="#fff"
+          strokeWidth="1"
+          opacity={0.4 + Math.random() * 0.5}
+        />
+      ))}
+
+      <rect x="0" y="400" width="920" height="140" fill="#e0e8f8" opacity="0.6" />
+
+      <rect x="0" y="0" width="920" height="540" fill="#203050" opacity="0.4" />
+    </svg>
+  );
+};
+
+const TentInteriorScene: React.FC = () => {
+  return (
+    <svg viewBox="0 0 920 540" style={{ width: '100%', height: '100%', imageRendering: 'pixelated' }}>
+      <defs>
+        <pattern id="tentFabric" patternUnits="userSpaceOnUse" width="16" height="16">
+          <rect width="16" height="16" fill="#4a5a3a" />
+          <rect x="0" y="0" width="8" height="8" fill="#3a4a2a" opacity="0.3" />
+          <rect x="8" y="8" width="8" height="8" fill="#3a4a2a" opacity="0.3" />
+        </pattern>
+      </defs>
+
+      <rect x="0" y="0" width="920" height="540" fill="#2a2a1a" />
+
+      <polygon points="0,540 460,80 920,540" fill="url(#tentFabric)" />
+      
+      <rect x="320" y="300" width="280" height="240" fill="#1a1a0a" />
+      <rect x="340" y="320" width="240" height="200" fill="#0a0a00" />
+
+      <circle cx="200" cy="200" r="30" fill="#ff6600" opacity="0.6" />
+      <circle cx="200" cy="200" r="20" fill="#ff8800" opacity="0.7" />
+      <circle cx="200" cy="200" r="12" fill="#ffaa00" opacity="0.8" />
+
+      <ellipse cx="200" cy="480" rx="80" ry="30" fill="#3a3a2a" />
+      <ellipse cx="200" cy="470" rx="50" ry="20" fill="#5a5a3a" />
+
+      <rect x="100" y="380" width="60" height="30" fill="#3a3a2a" />
+      <rect x="700" y="390" width="50" height="25" fill="#4a4a3a" />
+
+      <rect x="600" y="350" width="80" height="40" fill="#3a3a2a" />
+      <rect x="620" y="360" width="40" height="20" fill="#4a4a3a" />
+
+      <rect x="0" y="0" width="920" height="540" fill="rgba(0,0,0,0.2)" />
+    </svg>
+  );
+};
+
+const FinalCampScene: React.FC = () => {
+  return (
+    <svg viewBox="0 0 920 540" style={{ width: '100%', height: '100%', imageRendering: 'pixelated' }}>
+      <defs>
+        <linearGradient id="finalCampSky" x1="0%" y1="0%" x2="0%" y2="100%">
+          <stop offset="0%" stopColor="#0a0a2a" />
+          <stop offset="100%" stopColor="#1a1a3a" />
+        </linearGradient>
+      </defs>
+
+      <rect x="0" y="0" width="920" height="540" fill="url(#finalCampSky)" />
+
+      {[...Array(40)].map((_, i) => (
+        <circle
+          key={i}
+          cx={30 + (i * 23) % 860}
+          cy={20 + ((i * 17) % 200)}
+          r={1 + (i % 2)}
+          fill="#fff"
+          opacity={0.4 + (i % 4) * 0.15}
+        />
+      ))}
+
+      <ellipse cx="460" cy="400" rx="500" ry="160" fill="#e0e8f8" />
+      <rect x="0" y="380" width="920" height="160" fill="#e8eef8" />
+
+      <polygon points="350,380 460,200 570,380" fill="#3a4a5a" opacity="0.7" />
+
+      <rect x="380" y="340" width="160" height="80" fill="#2a3a4a" opacity="0.6" />
+
+      <rect x="400" y="360" width="120" height="40" fill="#1a2a3a" opacity="0.5" />
+
+      <ellipse cx="460" cy="460" rx="80" ry="30" fill="#d0d8e8" opacity="0.8" />
+
+      {[...Array(50)].map((_, i) => (
+        <line
+          key={i}
+          x1={Math.random() * 920}
+          y1={Math.random() * 540}
+          x2={Math.random() * 920 - 25}
+          y2={Math.random() * 540 + 30}
+          stroke="#e8f0f8"
+          strokeWidth="1"
+          opacity={0.2 + Math.random() * 0.3}
+        />
+      ))}
+
+      <rect x="0" y="0" width="920" height="540" fill="rgba(0,0,0,0.3)" />
+    </svg>
   );
 };
 
