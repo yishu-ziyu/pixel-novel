@@ -16,6 +16,10 @@ export interface CharacterDisplay {
 export interface Choice {
   text: string;
   nextSceneId: string;
+  /** Optional choice type hint - 'hub' for reversible/non-committal, 'committed' for one-way decisions */
+  choiceType?: 'hub' | 'committed';
+  /** Whether this choice is marked as critical/important */
+  isCritical?: boolean;
 }
 
 export interface Dialogue {
@@ -71,11 +75,16 @@ export interface AutoSaveData {
   justLoaded: boolean;
 }
 
+export type SkipMode = 'skipUnread' | 'skipAll';
+
 export interface SettingsData {
   textSpeed: number; // 0.5=slow, 1=medium, 2=fast, 5=instant
-  autoPlayInterval: number; // milliseconds: 1000, 2000, 3000
+  autoPlayInterval: number; // milliseconds: 1000, 2000, 3000, 5000
+  autoPlayStopOnInteraction: boolean; // stop auto-play on user input
   bgmVolume: number;
   sfxVolume: number;
+  voiceVolume: number;
+  skipMode: SkipMode;
   fullscreen: boolean;
 }
 

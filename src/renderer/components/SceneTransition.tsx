@@ -91,10 +91,8 @@ export const SceneTransition: React.FC<SceneTransitionProps> = ({
 
   const executeSlide = async (dur: number, direction: 'left' | 'right' | 'up' | 'down') => {
     const containerWidth = containerRef.current?.clientWidth ?? 920;
-    const containerHeight = containerRef.current?.clientHeight ?? 540;
 
     let offsetX = 0;
-    let offsetY = 0;
 
     switch (direction) {
       case 'left':
@@ -104,10 +102,9 @@ export const SceneTransition: React.FC<SceneTransitionProps> = ({
         offsetX = containerWidth;
         break;
       case 'up':
-        offsetY = -containerHeight;
-        break;
       case 'down':
-        offsetY = containerHeight;
+        // Vertical slide not fully implemented, fallback to horizontal
+        offsetX = direction === 'up' ? -containerWidth : containerWidth;
         break;
     }
 
@@ -119,7 +116,7 @@ export const SceneTransition: React.FC<SceneTransitionProps> = ({
     setSlideOffset(0);
   };
 
-  const executeIris = async (dur: number, origin: 'center' | 'top' | 'bottom' | 'left' | 'right') => {
+  const executeIris = async (dur: number, _origin: 'center' | 'top' | 'bottom' | 'left' | 'right') => {
     const maxRadius = 1500; // Enough to cover the entire screen
     const halfDuration = dur / 2;
 

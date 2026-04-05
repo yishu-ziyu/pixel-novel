@@ -14,7 +14,6 @@ const App: React.FC = () => {
 
   // Transition state
   const [oldSceneBackground, setOldSceneBackground] = useState<string | null>(null);
-  const [currentSceneBackground, setCurrentSceneBackground] = useState<string | null>(null);
   const [isTransitioning, setIsTransitioning] = useState(false);
   const [pendingTransition, setPendingTransition] = useState<EngineData['backgroundTransition']>(undefined);
   const previousSceneIdRef = useRef<string | null>(null);
@@ -40,18 +39,14 @@ const App: React.FC = () => {
             // Only transition if not already transitioning and there's a scene change
             if (!isTransitioning) {
               setOldSceneBackground(prevScene.background || null);
-              setCurrentSceneBackground(currentScene.background || null);
               setPendingTransition(transition);
               setIsTransitioning(true);
             }
           } else if (currentScene) {
             // First scene or scene not found in script
             setOldSceneBackground(null);
-            setCurrentSceneBackground(currentScene.background || null);
             setIsTransitioning(false);
           }
-        } else if (data.scene) {
-          setCurrentSceneBackground(data.scene.background || null);
         }
       }
     });

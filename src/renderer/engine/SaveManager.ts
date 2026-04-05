@@ -70,8 +70,11 @@ export class SaveManager {
     return {
       textSpeed: 1,
       autoPlayInterval: 2000,
+      autoPlayStopOnInteraction: true,
       bgmVolume: 0.7,
       sfxVolume: 0.8,
+      voiceVolume: 0.8,
+      skipMode: 'skipUnread',
       fullscreen: false,
     };
   }
