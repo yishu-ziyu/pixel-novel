@@ -21,6 +21,12 @@ export const StorySelector: React.FC<StorySelectorProps> = ({
       title: '最漫长的归途',
       description: '斯科特南极探险队的悲壮史诗',
       theme: '勇气、友谊、牺牲、尊严'
+    },
+    {
+      id: 'haber_prussian_blue',
+      title: '普鲁士蓝',
+      description: '关于弗里茨·哈伯的科学、道德与救赎',
+      theme: '科学、道德、悖论'
     }
   ];
 

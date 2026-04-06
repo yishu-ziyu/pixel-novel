@@ -1,0 +1,378 @@
+{
+  "title": "普鲁士蓝 / Prussian Blue",
+  "scenes": [
+    {
+      "id": "auschwitz_opening",
+      "name": "奥斯维辛",
+      "background": "auschwitz_cell",
+      "backgroundTransition": { "type": "fade", "duration": 800 },
+      "characters": [
+        { "character": "narrator", "emotion": "somber", "sprite": { "position": "center" } }
+      ],
+      "dialogues": [
+        {
+          "character": "旁白",
+          "emotion": "neutral",
+          "text": "奥斯维辛的砖墙上，至今仍有一层抹不去的蓝色。"
+        },
+        {
+          "character": "旁白",
+          "emotion": "neutral",
+          "text": "普鲁士蓝。这种颜料，曾被用来描绘最美丽的画卷，也曾被用来标记最黑暗的牢笼。"
+        },
+        {
+          "character": "旁白",
+          "emotion": "somber",
+          "text": "而这一切，都与一个名字紧紧相连——弗里茨·哈伯。"
+        },
+        {
+          "character": "旁白",
+          "emotion": "neutral",
+          "text": "他的化学发现，养活了数十亿人。他的另一项发明，却夺走了数百万人的生命。"
+        },
+        {
+          "character": "旁白",
+          "emotion": "somber",
+          "text": "一个人，怎么可能同时是救世主和刽子手？"
+        },
+        {
+          "character": "旁白",
+          "emotion": "neutral",
+          "text": "这蓝色不会消退。就像这个问题，永远没有答案。"
+        },
+        {
+          "character": "旁白",
+          "emotion": "somber",
+          "text": "让我们回到一切开始的地方——1907年，卡尔斯鲁厄的实验室。"
+        }
+      ]
+    },
+    {
+      "id": "haber_lab_1907",
+      "name": "1907 卡尔斯鲁厄",
+      "background": "karlsruhe_lab",
+      "backgroundTransition": { "type": "crossDissolve", "duration": 600 },
+      "characters": [
+        { "character": "haber", "emotion": "obsessed", "sprite": { "position": "center" } }
+      ],
+      "dialogues": [
+        {
+          "character": "哈伯",
+          "emotion": "obsessed",
+          "text": "（盯着蒸馏瓶中淡黄色的液体）这就是了。氮气。空气中无处不在的氮气。"
+        },
+        {
+          "character": "哈伯",
+          "emotion": "triumphant",
+          "text": "五百年来的化学家都失败了。而我，弗里茨·哈伯，即将解开这个自然界的终极谜题。"
+        },
+        {
+          "character": "旁白",
+          "emotion": "neutral",
+          "text": "一千大气压，两千摄氏度，还有铀催化剂。哈伯用这些极端条件，将空气中无尽的氮气，转化为可用的氨。"
+        },
+        {
+          "character": "哈伯",
+          "emotion": "triumphant",
+          "text": "德意志不会再有饥荒。我解决了氮的危机！"
+        },
+        {
+          "character": "哈伯",
+          "emotion": "dreamy",
+          "text": "未来，人们会称我为救世主。我将证明，科学技术可以战胜自然本身的限制。"
+        },
+        {
+          "character": "旁白",
+          "emotion": "neutral",
+          "text": "他不知道的是，同样的化学原理，也能被用来制造炸药、毒气。科学本身，没有道德可言。"
+        },
+        {
+          "character": "哈伯",
+          "emotion": "determined",
+          "text": "（举起试管）为了德意志的未来。为了全人类的进步！"
+        }
+      ]
+    },
+    {
+      "id": "ypres_1915",
+      "name": "1915 伊普尔",
+      "background": "ypres_battlefield",
+      "backgroundTransition": { "type": "crossDissolve", "duration": 700 },
+      "characters": [
+        { "character": "haber", "emotion": "haunted", "sprite": { "position": "left" } }
+      ],
+      "dialogues": [
+        {
+          "character": "旁白",
+          "emotion": "neutral",
+          "text": "1915年4月22日，伊普尔前线。世界上第一次大规模化学武器攻击。"
+        },
+        {
+          "character": "旁白",
+          "emotion": "somber",
+          "text": "六千桶氯气被释放。绿色的云雾，在微风吹拂下，缓缓飘向协约国阵地。"
+        },
+        {
+          "character": "旁白",
+          "emotion": "neutral",
+          "text": "那云是黄绿色的。带着一股刺鼻的烂苹果味。"
+        },
+        {
+          "character": "旁白",
+          "emotion": "somber",
+          "text": "士兵们看到这朵云时，还以为是某种新型烟雾弹。他们不知道的是，氯气会与肺中的水分反应，生成盐酸。"
+        },
+        {
+          "character": "旁白",
+          "emotion": "somber",
+          "text": "那晚，协约国方面有一万五千人中毒，其中五千人死亡。"
+        },
+        {
+          "character": "哈伯",
+          "emotion": "haunted",
+          "text": "（站在远处，沉默地看着那绿色的云）"
+        },
+        {
+          "character": "旁白",
+          "emotion": "neutral",
+          "text": "哈伯没有看。他不需要看。他知道氯气会做什么。"
+        },
+        {
+          "character": "哈伯",
+          "emotion": "obsessed",
+          "text": "（转身离去）战争会因此缩短。更多的生命会被拯救。这是科学的胜利。"
+        }
+      ]
+    },
+    {
+      "id": "klara_garden",
+      "name": "柏林 深夜",
+      "background": "berlin_garden_night",
+      "backgroundTransition": { "type": "fadeToBlack", "duration": 500 },
+      "characters": [
+        { "character": "haber", "emotion": "haunted", "sprite": { "position": "center" } },
+        { "character": "klara", "emotion": "desperate", "sprite": { "position": "right" } }
+      ],
+      "dialogues": [
+        {
+          "character": "克拉拉",
+          "emotion": "desperate",
+          "text": "弗里茨，你在战场上看到了什么？"
+        },
+        {
+          "character": "哈伯",
+          "emotion": "defensive",
+          "text": "我看到了胜利。化学武器将结束这场战争。"
+        },
+        {
+          "character": "克拉拉",
+          "emotion": "angry",
+          "text": "你看到的是死亡。我从你的眼睛里看到了。"
+        },
+        {
+          "character": "旁白",
+          "emotion": "neutral",
+          "text": "克拉拉·哈伯无法原谅丈夫将科学用于屠杀。几个月后，她将用氰化物结束自己的生命。"
+        },
+        {
+          "character": "克拉拉",
+          "emotion": "crying",
+          "text": "你说你喂饱了世界。可你用的是毒气。氯气。氰化物。"
+        },
+        {
+          "character": "哈伯",
+          "emotion": "defensive",
+          "text": "那是战争！所有人都在做同样的事！"
+        },
+        {
+          "character": "克拉拉",
+          "emotion": "desperate",
+          "text": "我不在乎。我只知道，我嫁给了一个人，他的心中有太多的方程式，太少的良心。"
+        },
+        {
+          "character": "旁白",
+          "emotion": "somber",
+          "text": "克拉拉留下了一封信和一朵白色的花。然后，她走进了花园的深处，再也没有回来。"
+        },
+        {
+          "character": "哈伯",
+          "emotion": "haunted",
+          "text": "（独白）科学没有道德。只有功用。我无法改变这一点。"
+        }
+      ],
+      "choices": [
+        {
+          "text": "克拉拉说得对。我应该停止这一切。",
+          "nextSceneId": "berlin_philharmonic",
+          "choiceType": "committed",
+          "isCritical": true
+        },
+        {
+          "text": "她会理解的。总有一天，历史会证明我是对的。",
+          "nextSceneId": "nuremberg_cell",
+          "choiceType": "committed",
+          "isCritical": true
+        },
+        {
+          "text": "我必须继续。科学需要我。",
+          "nextSceneId": "haber_death_1934",
+          "choiceType": "committed",
+          "isCritical": true
+        }
+      ]
+    },
+    {
+      "id": "nuremberg_cell",
+      "name": "纽伦堡 监狱",
+      "background": "nuremberg_cell",
+      "backgroundTransition": { "type": "iris", "duration": 600, "irisOrigin": "center" },
+      "characters": [
+        { "character": "goring", "emotion": "defiant", "sprite": { "position": "center" } }
+      ],
+      "dialogues": [
+        {
+          "character": "旁白",
+          "emotion": "neutral",
+          "text": "1946年10月，纽伦堡监狱。赫尔曼·戈林在等待处决。"
+        },
+        {
+          "character": "戈林",
+          "emotion": "defiant",
+          "text": "（看着自己手指上的红色指甲油）你知道吗？这是我自己带的。"
+        },
+        {
+          "character": "戈林",
+          "emotion": "smirk",
+          "text": "即使要死，我也要按照自己的方式死。红色的，指甲油。"
+        },
+        {
+          "character": "旁白",
+          "emotion": "neutral",
+          "text": "戈林服下了藏在袜子里的氰化物胶囊。而这氰化物，正是哈伯的遗产之一。"
+        },
+        {
+          "character": "戈林",
+          "emotion": "defiant",
+          "text": "哈伯博士的化学，养活过你们所有人。而我们，用它来保卫第三帝国。"
+        },
+        {
+          "character": "戈林",
+          "emotion": "smirk",
+          "text": "科学是中立的，不是吗？这就是你们所说的'哈伯的辩证法'？"
+        },
+        {
+          "character": "旁白",
+          "emotion": "somber",
+          "text": "第二天早晨，戈林的牢房里只剩下了一具尸体，和那挥之不去的杏仁气味。"
+        }
+      ]
+    },
+    {
+      "id": "haber_death_1934",
+      "name": "1934 剑桥",
+      "background": "cambridge_room",
+      "backgroundTransition": { "type": "crossDissolve", "duration": 500 },
+      "characters": [
+        { "character": "haber", "emotion": "haunted", "sprite": { "position": "center" } }
+      ],
+      "dialogues": [
+        {
+          "character": "旁白",
+          "emotion": "neutral",
+          "text": "1934年，瑞士巴塞尔。弗里茨·哈伯死于心脏病发作。"
+        },
+        {
+          "character": "旁白",
+          "emotion": "neutral",
+          "text": "他的心脏再也承受不住。他随身携带的硝酸甘油药片，也没能救他。"
+        },
+        {
+          "character": "哈伯",
+          "emotion": "resigned",
+          "text": "（独白）我逃离了德国，逃离了纳粹，逃离了那些用我的科学杀人的人。"
+        },
+        {
+          "character": "哈伯",
+          "emotion": "haunted",
+          "text": "但我无法逃离我自己的化学。"
+        },
+        {
+          "character": "旁白",
+          "emotion": "somber",
+          "text": " irony。这个词对哈伯而言，从来没有如此精确过。他用氮气创造了食物，用氯气制造了毒气，用氰化物——"
+        },
+        {
+          "character": "旁白",
+          "emotion": "neutral",
+          "text": "他的妻子选择了氰化物来结束自己的生命。他的遗产之一，氰化物，也让戈林得以选择自己的死亡方式。"
+        },
+        {
+          "character": "哈伯",
+          "emotion": "resigned",
+          "text": "（最后的独白）创造与毁灭，救赎与诅咒。我永远无法分辨哪一个才是真正的我。"
+        }
+      ]
+    },
+    {
+      "id": "berlin_philharmonic",
+      "name": "柏林爱乐乐团",
+      "background": "berlin_philharmonic",
+      "backgroundTransition": { "type": "fadeToBlack", "duration": 1000 },
+      "characters": [
+        { "character": "narrator", "emotion": "somber", "sprite": { "position": "center" } }
+      ],
+      "dialogues": [
+        {
+          "character": "旁白",
+          "emotion": "neutral",
+          "text": "柏林爱乐乐团。这是哈伯最后一次来到这里。"
+        },
+        {
+          "character": "旁白",
+          "emotion": "somber",
+          "text": "音乐在大厅里回荡。贝多芬的第九交响曲，欢乐的颂歌。"
+        },
+        {
+          "character": "旁白",
+          "emotion": "neutral",
+          "text": "在这音乐中，哈伯看到了他拯救的数十亿人，也看到了他间接杀死的数百万人。"
+        },
+        {
+          "character": "哈伯",
+          "emotion": "haunted",
+          "text": "（独白）我永远无法知道，我是救了人类，还是害了人类。也许两者皆是。"
+        },
+        {
+          "character": "旁白",
+          "emotion": "somber",
+          "text": "普鲁士蓝依然在奥斯维辛的墙上。氯气依然在战场上飘荡。氰化物依然在被使用。"
+        },
+        {
+          "character": "旁白",
+          "emotion": "neutral",
+          "text": "而这一切的源头，只是一个想要解决氮肥问题的化学家。"
+        },
+        {
+          "character": "旁白",
+          "emotion": "somber",
+          "text": "问题依然存在，没有答案："
+        },
+        {
+          "character": "旁白",
+          "emotion": "neutral",
+          "text": "能够拯救人类的东西，是否也能毁灭人类？"
+        },
+        {
+          "character": "旁白",
+          "emotion": "somber",
+          "text": "这个问题，也许永远不会有答案。"
+        },
+        {
+          "character": "旁白",
+          "emotion": "neutral",
+          "text": "—— 完 ——"
+        }
+      ]
+    }
+  ]
+}

@@ -1,6 +1,6 @@
 import React, { useEffect, useState, useCallback, useRef } from 'react';
 import { NovelEngine, EngineState, EngineData, SettingsData } from './engine';
-import { DialogueBox, ChoicePanel, CharacterLayer, MainMenu, PauseMenu, SaveLoadMenu, SettingsMenu, PixelArtScene, BranchTreeViewer, StorySelector, TransitionManager } from './components';
+import { DialogueBox, ChoicePanel, CharacterLayer, MainMenu, PauseMenu, SaveLoadMenu, SettingsMenu, PixelArtScene, BranchTreeViewer, StorySelector, TransitionManager, HaberStoryScenes } from './components';
 
 const engine = new NovelEngine();
 
@@ -11,6 +11,7 @@ const App: React.FC = () => {
   const [engineData, setEngineData] = useState<EngineData>({});
   const [appState, setAppState] = useState<AppState>('main_menu');
   const [settings, setSettings] = useState<SettingsData>(() => engine.getSaveManager().getSettings());
+  const [currentStoryId, setCurrentStoryId] = useState<string | null>(null);
 
   // Transition state
   const [oldSceneBackground, setOldSceneBackground] = useState<string | null>(null);
@@ -96,7 +97,10 @@ const App: React.FC = () => {
       engine.loadScript('convenience_store.json');
     } else if (storyId === 'scott_antarctic') {
       engine.loadScript('scott_antarctic.json');
+    } else if (storyId === 'haber_prussian_blue') {
+      engine.loadScript('haber_prussian_blue.json');
     }
+    setCurrentStoryId(storyId);
     engine.startAutoSave();
     setAppState('playing');
   }, []);
@@ -240,20 +244,30 @@ const App: React.FC = () => {
             {isTransitioning && oldSceneBackground && pendingTransition ? (
               <TransitionManager
                 oldScene={
-                  <PixelArtScene
-                    type={oldSceneBackground as any}
-                    timeOfDay="night"
-                  />
+                  currentStoryId === 'haber_prussian_blue' ? (
+                    <HaberStoryScenes type={(oldSceneBackground as any) || 'auschwitz_cell'} />
+                  ) : (
+                    <PixelArtScene
+                      type={oldSceneBackground as any}
+                      timeOfDay="night"
+                    />
+                  )
                 }
                 newScene={
-                  <PixelArtScene
-                    type={(engineData.scene?.background as any) || 'convenience_store'}
-                    timeOfDay="night"
-                  />
+                  currentStoryId === 'haber_prussian_blue' ? (
+                    <HaberStoryScenes type={(engineData.scene?.background as any) || 'auschwitz_cell'} />
+                  ) : (
+                    <PixelArtScene
+                      type={(engineData.scene?.background as any) || 'convenience_store'}
+                      timeOfDay="night"
+                    />
+                  )
                 }
                 transition={pendingTransition}
                 onComplete={handleTransitionComplete}
               />
+            ) : currentStoryId === 'haber_prussian_blue' ? (
+              <HaberStoryScenes type={(engineData.scene?.background as any) || 'auschwitz_cell'} />
             ) : (
               <PixelArtScene
                 type={(engineData.scene?.background as any) || 'convenience_store'}
