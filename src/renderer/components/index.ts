@@ -1,3 +1,4 @@
+export { CameraWrapper } from './CameraWrapper';
 export { DialogueBox } from './DialogueBox';
 export { ChoicePanel } from './ChoicePanel';
 export { SceneRenderer } from './SceneRenderer';

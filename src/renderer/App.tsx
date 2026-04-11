@@ -1,6 +1,6 @@
 import React, { useEffect, useState, useCallback, useRef } from 'react';
 import { NovelEngine, EngineState, EngineData, SettingsData } from './engine';
-import { DialogueBox, ChoicePanel, CharacterLayer, MainMenu, PauseMenu, SaveLoadMenu, SettingsMenu, PixelArtScene, BranchTreeViewer, StorySelector, TransitionManager, HaberStoryScenes } from './components';
+import { DialogueBox, ChoicePanel, CharacterLayer, MainMenu, PauseMenu, SaveLoadMenu, SettingsMenu, PixelArtScene, BranchTreeViewer, StorySelector, TransitionManager, HaberStoryScenes, CameraWrapper } from './components';
 
 const engine = new NovelEngine();
 
@@ -241,7 +241,8 @@ const App: React.FC = () => {
 
         {(appState === 'playing' || appState === 'paused' || appState === 'save_menu' || appState === 'load_menu' || appState === 'settings') && (
           <>
-            {isTransitioning && oldSceneBackground && pendingTransition ? (
+            <CameraWrapper cameraState={engineData.cameraState}>
+              {isTransitioning && oldSceneBackground && pendingTransition ? (
               <TransitionManager
                 oldScene={
                   currentStoryId === 'haber_prussian_blue' ? (
@@ -279,7 +280,9 @@ const App: React.FC = () => {
               characters={engineData.characters || []}
               activeCharacter={engineData.activeCharacter}
               activeEmotion={engineData.activeEmotion}
+              activeSprite={engineData.activeSprite}
             />
+          </CameraWrapper>
 
             {engineState === 'dialogue' && engineData.dialogue && (
               <DialogueBox

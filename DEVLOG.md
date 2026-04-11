@@ -67,6 +67,28 @@
 
 ---
 
+### 2026-04-06
+
+#### 🎬 意图导演系统 (Intent Director System) 
+
+为了打破视觉小说传统的静态感，引入了基于“叙事意图”的动态镜头系统。该系统允许开发者通过描述故事氛围（Intent）来自动驱动镜头的缩放、平移和震动。
+
+**新增文件**:
+- `src/renderer/components/CameraWrapper.tsx` - 核心摄影机组件，负责处理所有镜头变换（Zoom, Pan, Shake）。
+
+**技术更新**:
+- **`src/renderer/engine/types.ts`**: 新增 `CinematicIntent` 和 `CameraState` 类型，增强 `Dialogue` 接口支持 `intent`。
+- **`src/renderer/engine/NovelEngine.ts`**: 实现了 `calculateCameraState` 逻辑：支持意图映射和**动态追踪 (Character Focus)**，镜头自动跟随发言角色。
+- **`src/renderer/App.tsx`**: 集成 `CameraWrapper`，实现游戏世界与 HUD UI 的渲染解耦。
+- **剧本增强**: 在 `convenience_store.json` 中注入了 `melancholy` (忧郁), `intrigue` (探寻), `shock` (惊吓) 等意图。
+
+**核心特性**:
+- **自动化聚焦**: 镜头平滑跟随对话角色位置。
+- **叙事共鸣**: 动画由故事意图驱动，非模板化动作。
+- **性能优化**: 纯 CSS Transform 实现，流畅无卡顿。
+
+---
+
 ## 运行方式
 
 ```bash
@@ -88,9 +110,9 @@ npm run dev             # 前后端同时运行
 
 ## 待办事项
 
-- [ ] 添加角色立绘图片资源
-- [ ] 添加背景图片资源
-- [ ] 添加背景音乐和音效
+- [x] 添加角色立绘图片资源
+- [x] 添加背景图片资源
+- [x] 添加背景音乐和音效
 - [ ] 添加更多表情变化
-- [ ] 实现角色退场动画
-- [ ] 添加存档/读档功能
+- [x] 实现角色退场动画
+- [x] 添加存档/读档缩略图反馈机制功能

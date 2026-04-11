@@ -1,7 +1,8 @@
-import { NovelScript, Scene, Dialogue, EngineState, Choice, CharacterDisplay, BackgroundTransition, SaveData } from './types';
+import { NovelScript, Scene, Dialogue, EngineState, Choice, CharacterDisplay, BackgroundTransition, CameraState, CinematicIntent } from './types';
 import { ScriptParser } from './ScriptParser';
 import { SaveManager } from './SaveManager';
 import { AudioManager } from './AudioManager';
+import html2canvas from 'html2canvas';
 
 type EngineListener = (state: EngineState, data: EngineData) => void;
 
@@ -14,6 +15,7 @@ export interface EngineData {
   characters?: CharacterDisplay[];
   activeCharacter?: string;
   activeEmotion?: string;
+  activeSprite?: import('./types').CharacterSpriteConfig;
   backgroundTransition?: BackgroundTransition;
   previousBackground?: string;
   saveManager?: SaveManager;
@@ -26,7 +28,17 @@ export interface EngineData {
   visitedSceneIds?: string[];
   visitedDialogueIds?: string[];
   currentDialogueId?: string;
+  cameraState?: CameraState;
 }
+
+const INTENT_CAMERA_MAP: Record<CinematicIntent, Partial<CameraState>> = {
+  intrigue: { zoom: 1.2, shake: 0, duration: 2000, easing: 'ease-in-out' },
+  revelation: { zoom: 1.5, shake: 0.1, duration: 800, easing: 'ease-out' },
+  melancholy: { zoom: 1.05, shake: 0, duration: 4000, easing: 'linear' },
+  shock: { zoom: 1.3, shake: 0.5, duration: 150, easing: 'ease-in' },
+  cozy: { zoom: 1.1, shake: 0.02, duration: 3000, easing: 'ease-in-out' },
+  neutral: { zoom: 1.0, shake: 0, duration: 500, easing: 'ease-out' },
+};
 
 export class NovelEngine {
   private script: NovelScript | null = null;
@@ -53,6 +65,14 @@ export class NovelEngine {
   private playTimeSeconds: number = 0;
   private playTimeInterval: ReturnType<typeof setInterval> | null = null;
   private onAutoSave?: () => void;
+  private currentCameraState: CameraState = {
+    zoom: 1.0,
+    x: 0,
+    y: 0,
+    shake: 0,
+    duration: 500,
+    easing: 'ease-out',
+  };
 
   constructor() {
     this.parser = new ScriptParser();
@@ -93,6 +113,36 @@ export class NovelEngine {
     };
   }
 
+  private calculateCameraState(dialogue: Dialogue | null): CameraState {
+    const intent = dialogue?.intent || 'neutral';
+    const config = INTENT_CAMERA_MAP[intent];
+    
+    let x = 0;
+    let y = 0;
+
+    // Automatic tracking: focal point on character position
+    if (dialogue?.character && this.currentScene?.characters) {
+      const charConfig = this.currentScene.characters.find(c => c.character === dialogue.character);
+      const position = charConfig?.sprite?.position || dialogue.sprite?.position || 'center';
+      
+      if (position === 'left') x = -20;
+      else if (position === 'right') x = 20;
+      else x = 0;
+      
+      // Slight zoom adjustment for focus
+      y = -5; // Focus a bit on the face area
+    }
+
+    return {
+      zoom: config.zoom || 1.0,
+      x: x,
+      y: y,
+      shake: config.shake || 0,
+      duration: config.duration || 500,
+      easing: config.easing || 'ease-out',
+    };
+  }
+
   private notify(): void {
     const dialogue = this.currentDialogue;
     let backgroundTransition: BackgroundTransition | undefined;
@@ -102,6 +152,7 @@ export class NovelEngine {
     }
 
     const currentDialogueId = this.getCurrentDialogueId();
+    this.currentCameraState = this.calculateCameraState(dialogue);
 
     const data: EngineData = {
       script: this.script || undefined,
@@ -112,6 +163,7 @@ export class NovelEngine {
       characters: this.currentScene?.characters || [],
       activeCharacter: dialogue?.character,
       activeEmotion: dialogue?.emotion,
+      activeSprite: dialogue?.sprite,
       backgroundTransition,
       previousBackground: this.previousBackground,
       saveManager: this.saveManager,
@@ -124,6 +176,7 @@ export class NovelEngine {
       visitedSceneIds: Array.from(this.visitedSceneIds),
       visitedDialogueIds: Array.from(this.visitedDialogueIds),
       currentDialogueId,
+      cameraState: this.currentCameraState,
     };
     this.listeners.forEach((l) => l(this.state, data));
   }
@@ -151,6 +204,12 @@ export class NovelEngine {
       this.audioManager.fadeOutBgm(500);
     }
 
+    // Handle Ambience SFX
+    this.audioManager.stopAllSfx();
+    if (scene.ambience) {
+      this.audioManager.playSfx(scene.ambience, { volume: 1, loop: true }).catch(() => {});
+    }
+
     if (this.saveManager.shouldAutoSave(sceneId)) {
       this.performAutoSave();
     }
@@ -176,6 +235,9 @@ export class NovelEngine {
 
     if (dialogue) {
       this.dialogueHistory.push(dialogue);
+      if (dialogue.sfx) {
+        this.audioManager.playSfx(dialogue.sfx).catch(() => {});
+      }
     }
 
     this.displayedText = '';
@@ -330,8 +392,20 @@ export class NovelEngine {
     return this.state;
   }
 
-  saveGame(saveId: number, saveName?: string): boolean {
+  async saveGame(saveId: number, saveName?: string): Promise<boolean> {
     if (!this.currentScene) return false;
+    
+    let thumbnail: string | undefined;
+    try {
+      const canvas = await html2canvas(document.body, { 
+        ignoreElements: (element) => element.id === 'ui-layer',
+        scale: 0.25 // keep thumbnail small
+      });
+      thumbnail = canvas.toDataURL('image/jpeg', 0.6);
+    } catch (e) {
+      console.error('Failed to generate thumbnail', e);
+    }
+
     return this.saveManager.saveGame(
       saveId,
       saveName || `Save ${saveId + 1}`,
@@ -339,7 +413,7 @@ export class NovelEngine {
       this.dialogueIndex,
       this.choicesMade,
       this.displayedText,
-      undefined,
+      thumbnail,
       this.playTimeSeconds
     );
   }
@@ -371,8 +445,15 @@ export class NovelEngine {
     return true;
   }
 
-  quickSave(): boolean {
+  async quickSave(): Promise<boolean> {
     if (!this.currentScene) return false;
+    
+    let thumbnail: string | undefined;
+    try {
+      const canvas = await html2canvas(document.body, { scale: 0.25 });
+      thumbnail = canvas.toDataURL('image/jpeg', 0.6);
+    } catch (e) {}
+
     return this.saveManager.saveGame(
       0,
       'Quick Save',
@@ -380,13 +461,20 @@ export class NovelEngine {
       this.dialogueIndex,
       this.choicesMade,
       this.displayedText,
-      undefined,
+      thumbnail,
       this.playTimeSeconds
     );
   }
 
-  private performAutoSave(): void {
+  private async performAutoSave(): Promise<void> {
     if (!this.currentScene) return;
+    
+    let thumbnail: string | undefined;
+    try {
+      const canvas = await html2canvas(document.body, { scale: 0.25 });
+      thumbnail = canvas.toDataURL('image/jpeg', 0.6);
+    } catch (e) {}
+
     this.saveManager.autoSave(
       this.currentScene.id,
       this.currentScene.name,
@@ -394,7 +482,7 @@ export class NovelEngine {
       this.choicesMade,
       this.displayedText,
       this.playTimeSeconds,
-      this.currentScene.background
+      thumbnail || this.currentScene.background
     );
     if (this.onAutoSave) {
       this.onAutoSave();

@@ -1,4 +1,4 @@
-import { NovelScript, Scene, Dialogue, Choice, CharacterDisplay, CharacterSpriteConfig, BackgroundTransition } from './types';
+import { NovelScript, Scene, Dialogue, Choice, CharacterSpriteConfig } from './types';
 
 export class ScriptParser {
   async loadScript(scriptPath: string): Promise<NovelScript | null> {
@@ -79,6 +79,10 @@ export class ScriptParser {
 
     if (d.sprite) {
       if (!this.validateCharacterSpriteConfig(d.sprite)) return false;
+    }
+
+    if (d.sfx !== undefined) {
+      if (typeof d.sfx !== 'string') return false;
     }
 
     return true;

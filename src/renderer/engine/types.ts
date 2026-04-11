@@ -22,12 +22,25 @@ export interface Choice {
   isCritical?: boolean;
 }
 
+export type CinematicIntent = 'intrigue' | 'revelation' | 'melancholy' | 'shock' | 'cozy' | 'neutral';
+
+export interface CameraState {
+  zoom: number; // 1.0 is default
+  x: number;    // -100 to 100 percentage
+  y: number;    // -100 to 100 percentage
+  shake: number; // 0 to 1 intensity
+  duration: number; // in ms
+  easing: 'linear' | 'ease-in' | 'ease-out' | 'ease-in-out';
+}
+
 export interface Dialogue {
   character?: string;
   emotion?: string;
   text: string;
   choices?: Choice[];
   sprite?: CharacterSpriteConfig;
+  intent?: CinematicIntent;
+  sfx?: string;
 }
 
 export interface BackgroundTransition {

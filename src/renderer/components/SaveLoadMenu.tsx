@@ -1,5 +1,5 @@
 import React from 'react';
-import { SaveData, SaveManager } from '../engine';
+import { SaveManager } from '../engine';
 
 interface SaveLoadMenuProps {
   saveManager: SaveManager;
@@ -67,7 +67,7 @@ export const SaveLoadMenu: React.FC<SaveLoadMenuProps> = ({
           maxWidth: 500,
         }}
       >
-        {saveSlots.map((slot, index) => (
+        {saveSlots.map((slot) => (
           <div
             key={slot.saveId}
             style={{
@@ -123,6 +123,28 @@ export const SaveLoadMenu: React.FC<SaveLoadMenuProps> = ({
                 </span>
               )}
             </div>
+            
+            {/* 缩略图展示 / Thumbnail Display */}
+            {slot.timestamp > 0 && (
+              <div 
+                style={{ 
+                  width: '100%', 
+                  height: '80px', 
+                  backgroundColor: '#000', 
+                  marginBottom: 8,
+                  borderRadius: 4,
+                  overflow: 'hidden',
+                  position: 'relative'
+                }}
+              >
+                {slot.thumbnail && slot.thumbnail.startsWith('data:image') ? (
+                  <img src={slot.thumbnail} style={{ width: '100%', height: '100%', objectFit: 'cover' }} alt="save thumb" />
+                ) : (
+                  <div style={{ padding: 4, color: '#666', fontSize: 8 }}>No Snapshot Data</div>
+                )}
+              </div>
+            )}
+
             <div
               style={{
                 color: slot.timestamp > 0 ? '#fff' : '#666',

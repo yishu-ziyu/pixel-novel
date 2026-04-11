@@ -1,10 +1,60 @@
 import React, { useState, useEffect } from 'react';
 
+const getAnimationKeyframes = (animation: string): string => {
+  const animations: Record<string, string> = {
+    fadeIn: `
+      @keyframes fadeIn {
+        from { opacity: 0; }
+        to { opacity: 1; }
+      }
+    `,
+    slideInLeft: `
+      @keyframes slideInLeft {
+        from { opacity: 0; transform: translateX(-100px); }
+        to { opacity: 1; transform: translateX(0); }
+      }
+    `,
+    slideInRight: `
+      @keyframes slideInRight {
+        from { opacity: 0; transform: translateX(100px); }
+        to { opacity: 1; transform: translateX(0); }
+      }
+    `,
+    slideInCenter: `
+      @keyframes slideInCenter {
+        from { opacity: 0; transform: translateX(-50%) translateY(50px); }
+        to { opacity: 1; transform: translateX(-50%) translateY(0); }
+      }
+    `,
+    fadeOut: `
+      @keyframes fadeOut {
+        from { opacity: 1; }
+        to { opacity: 0; }
+      }
+    `,
+    slideOutLeft: `
+      @keyframes slideOutLeft {
+        from { opacity: 1; transform: translateX(0); }
+        to { opacity: 0; transform: translateX(-100px); }
+      }
+    `,
+    slideOutRight: `
+      @keyframes slideOutRight {
+        from { opacity: 1; transform: translateX(0); }
+        to { opacity: 0; transform: translateX(100px); }
+      }
+    `,
+  };
+  return animations[animation] || animations.fadeIn;
+};
+
 interface PixelCharacterProps {
-  character: 'silver_girl' | 'fox' | 'radish' | 'player';
-  emotion?: 'neutral' | 'happy' | 'sad' | 'surprised' | 'curious' | 'gentle' | 'laugh' | 'smile';
+  character: 'silver_girl' | 'fox' | 'radish' | 'player' | string;
+  emotion?: 'neutral' | 'happy' | 'sad' | 'surprised' | 'curious' | 'gentle' | 'laugh' | 'smile' | string;
   position?: 'left' | 'center' | 'right';
   speaking?: boolean;
+  animation?: 'fadeIn' | 'slideInLeft' | 'slideInRight' | 'slideInCenter' | 'fadeOut' | 'slideOutLeft' | 'slideOutRight' | string;
+  onAnimationComplete?: () => void;
 }
 
 export const PixelCharacter: React.FC<PixelCharacterProps> = ({
@@ -12,9 +62,31 @@ export const PixelCharacter: React.FC<PixelCharacterProps> = ({
   emotion = 'neutral',
   position = 'center',
   speaking = false,
+  animation = 'fadeIn',
+  onAnimationComplete,
 }) => {
   const [blinkFrame, setBlinkFrame] = useState(0);
   const [breathFrame, setBreathFrame] = useState(0);
+  const [animationClass, setAnimationClass] = useState(animation);
+  const [isVisible, setIsVisible] = useState(true);
+
+  useEffect(() => {
+    setAnimationClass(animation);
+    if (animation && !animation.includes('Out')) {
+      setIsVisible(true);
+    }
+    
+    // Inject styles
+    const styleId = `character-animation-styles-${character}`;
+    let styleElement = document.getElementById(styleId) as HTMLStyleElement | null;
+
+    if (!styleElement) {
+      styleElement = document.createElement('style');
+      styleElement.id = styleId;
+      document.head.appendChild(styleElement);
+    }
+    styleElement.textContent = getAnimationKeyframes(animation);
+  }, [animation, character]);
 
   useEffect(() => {
     const blinkInterval = setInterval(() => {
@@ -60,16 +132,27 @@ export const PixelCharacter: React.FC<PixelCharacterProps> = ({
     }
   };
 
+  if (!isVisible) return null;
+
   return (
     <div
+      data-character={character}
+      onAnimationEnd={(e) => {
+        if (e.animationName === animationClass) {
+          if (animationClass.includes('Out')) setIsVisible(false);
+          onAnimationComplete?.();
+        }
+      }}
       style={{
         position: 'absolute',
         bottom: '80px',
         ...getPositionStyle(),
         width: '160px',
         height: '240px',
-        transition: 'all 0.3s ease',
+        transition: 'left 0.3s ease, right 0.3s ease',
+        animation: `${animationClass} 0.5s ease-out forwards`,
         imageRendering: 'pixelated' as const,
+        zIndex: position === 'center' ? 10 : 5,
       }}
     >
       {getCharacterSprite()}
